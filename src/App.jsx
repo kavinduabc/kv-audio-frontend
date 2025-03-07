@@ -7,8 +7,14 @@ function App() {
 
   return (
     <>
-    <div className='bg-red-300 w-full h-screen'></div>
-     <p className='text-xl'>Hello </p>
+    <div className='w-full h-screen flex'>
+      <div className='w-[300px] h-full bg-green-200'>
+
+      </div>
+      <div className='w-full bg-red-900'>
+        
+      </div>
+    </div>
     </>
   )
 }
