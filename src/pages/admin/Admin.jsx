@@ -10,18 +10,18 @@ const Admin = () => {
      <div className='w-full h-screen flex'>
           <div className='w-[300px] h-full bg-green-200'>
             <Link to="/admin/booking">
-             <button className='w-full h-[40px] text-[25px] font-bold bg-red-400 flex justify-center items-center ' >
+             <button className='w-full h-[40px] text-[25px] font-bold flex justify-center items-center ' >
               <BsGraphDown/>
               Dashboard</button></Link>
               <Link to="/admin/booking">
-             <button className='w-full h-[40px] text-[25px] font-bold bg-red-400 flex justify-center items-center ' >
+             <button className='w-full h-[40px] text-[25px] font-bold  flex justify-center items-center ' >
               <BsBookmarkDash/>
               Booking</button></Link>
               
-             <button className='w-full h-[40px] text-[25px] font-bold bg-red-400  flex justify-center items-center' >
+             <button className='w-full h-[40px] text-[25px] font-bold   flex justify-center items-center' >
               <MdOutlineSpeaker/>
               Items</button>
-             <button className='w-full h-[40px] text-[25px] font-bold bg-red-400  flex justify-center items-center' >
+             <button className='w-full h-[40px] text-[25px] font-bold   flex justify-center items-center' >
               <FaRegUser/>
               Users</button>
           </div>
