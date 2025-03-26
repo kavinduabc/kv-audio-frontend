@@ -41,9 +41,6 @@ export default function AddProduct() {
       );
       toast.success(result.data.message);
     } catch (err) {
-        console.log("Full error:", err); 
-        console.log("Error Response:", err.response?.data);
-
         toast.error(err.response?.data?.error || "Something went wrong");
     }
 }
