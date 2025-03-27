@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
   const [productKey, setProductKey] = useState("");
@@ -9,6 +10,8 @@ export default function AddProduct() {
   const [productCategory, setProductCategory] = useState("audio");
   const [productDimension, setProductDimension] = useState("");
   const [productDescription, setProductDescription] = useState("");
+
+  const navigate = useNavigate()
 
   //** Function to add a product */
   async function handleAddItem() {
@@ -40,6 +43,7 @@ export default function AddProduct() {
         }
       );
       toast.success(result.data.message);
+      navigate("/admin/items")
     } catch (err) {
         toast.error(err.response?.data?.error || "Something went wrong");
     }
@@ -96,9 +100,9 @@ export default function AddProduct() {
         <button onClick={handleAddItem} className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
           Add Product
         </button>
-        <button className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
-          Cancel
-        </button>
+        <button onClick={() => navigate("/admin/items")} className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
+        Cancel
+    </button>
       </div>
     </div>
   );
