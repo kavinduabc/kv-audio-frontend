@@ -1,48 +1,106 @@
-import { useState } from "react"
-import {CiCirclePlus} from "react-icons/ci"
-import { Link } from "react-router-dom"
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { CiCirclePlus } from "react-icons/ci";
+import { Link } from "react-router-dom";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 
-export default function AItems(){
+export default function AItems() {
+    const [items, setItems] = useState([]);
+    const [itemloaded, SetItemLoaded] = useState(false);
 
-    const [items,setItems] = useState()
+    useEffect(() => {
 
-    return(
-        <div className="w-full h-full relative ">
-            <table>
-                <thead>
-                    <th>
-                      <th>Key</th>
-                      <th>Name</th>
-                      <th>Price</th>
-                      <th>Category</th>
-                      <th>Dimensions</th>
-                      <th>Description</th>
-                      <th>Availability</th>
-                    </th>
-                </thead>
-                <tbody>
-                    {
-                        items.map((product)=>{
-                           console.log(product);
-                           return(
-                            <tr key={product.key}>
-                                <td>{product.key}</td>
-                                <td>{product.name}</td>
-                                <td>{product.price}</td>
-                                <td>{product.category}</td>
-                                <td>{product.dimensions}</td>
-                                <td>{product.description}</td>
-                                <td>{product.availability ? "Available" : "Not Available"}</td>
+        if(!itemloaded){
+            const token = localStorage.getItem("token");
+
+        axios.get("http://localhost:3000/api/product", {
+            headers: { "Authorization": `Bearer ${token}` }
+        })
+        .then((res) => {
+            console.log(res.data);
+            setItems(res.data);
+            SetItemLoaded(true);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+
+        }
+      
+    }, [itemloaded]);
+
+    const handleDelete = (key) => {
+       
+        if(window.confirm("Are you sure you want to delete this item?"))
+        {
+            setItems(items.filter((item)=>item.key !== key));
+
+            const token = localStorage.getItem("token");
+
+            axios.delete(`http://localhost:3000/api/product/${key}`,{
+                headers: { Authorization: `Bearer ${token}`},
+            }).then(
+                (res) =>{
+                    console.log(res.data);
+                    SetItemLoaded(false);
+                }
+            ).catch(
+                (err) =>{
+                    console.error(err);
+                }
+            )
+        }
+    };
+
+    return (
+        <div className="w-full h-full p-6 bg-gray-100 relative flex flex-col items-center">
+           { !itemloaded &&<div className="border-4 my-4 border-b-green-500 rounded-full animate-spin w-[100px] h-[100px]"></div>}
+           {itemloaded && <div className="overflow-x-auto shadow-md rounded-lg">
+                <table className="w-full max-w-full text-left border-collapse bg-white shadow-lg rounded-lg">
+                    <thead>
+                        <tr className="bg-gray-200 text-gray-700">
+                            <th className="px-4 py-2">Key</th>
+                            <th className="px-4 py-2">Name</th>
+                            <th className="px-4 py-2">Price</th>
+                            <th className="px-4 py-2">Category</th>
+                            <th className="px-4 py-2">Dimensions</th>
+                            <th className="px-4 py-2">Description</th>
+                            <th className="px-4 py-2">Availability</th>
+                            <th className="px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {items.length > 0 ? (
+                            items.map((product) => (
+                                <tr key={product.key} className="border-b hover:bg-gray-100">
+                                    <td className="px-4 py-2">{product.key}</td>
+                                    <td className="px-4 py-2">{product.name}</td>
+                                    <td className="px-4 py-2">${product.price}</td>
+                                    <td className="px-4 py-2">{product.category}</td>
+                                    <td className="px-4 py-2">{product.dimensions}</td>
+                                    <td className="px-4 py-2">{product.description}</td>
+                                    <td className="px-4 py-2">{product.availability ? "Available" : "Not Available"}</td>
+                                    <td className="px-4 py-2 flex space-x-3">
+                                        <Link to={`/admin/items/edit/${product.key}`} className="text-blue-600 hover:text-blue-800">
+                                            <FiEdit size={20} />
+                                        </Link>
+                                        <button onClick={() => handleDelete(product.key)} className="text-red-600 hover:text-red-800">
+                                            <FiTrash2 size={20} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="8" className="text-center py-4">No products available</td>
                             </tr>
-                           ) 
-
-                        })
-                    }
-                </tbody>
-            </table>
-           <Link to='/admin/items/add'>
-           <CiCirclePlus className="text-[50px] absolute right-2 bottom-2 hover:text-red-900 cursor-pointer"/>
-           </Link>
+                        )}
+                    </tbody>
+                </table>
+            </div>}
+            <Link to="/admin/items/add" className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-800 transition">
+                <CiCirclePlus size={40} />
+            </Link>
         </div>
-    )
+    );
 }
