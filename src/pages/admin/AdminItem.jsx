@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 export default function AItems() {
     const [items, setItems] = useState([]);
     const [itemloaded, SetItemLoaded] = useState(false);
+    const navigate = useNavigate()
 
     useEffect(() => {
 
@@ -81,9 +82,11 @@ export default function AItems() {
                                     <td className="px-4 py-2">{product.description}</td>
                                     <td className="px-4 py-2">{product.availability ? "Available" : "Not Available"}</td>
                                     <td className="px-4 py-2 flex space-x-3">
-                                        <Link to={`/admin/items/edit/${product.key}`} className="text-blue-600 hover:text-blue-800">
+                                        <button onClick={()=>{
+                                            navigate(`/admin/items/eddit`,{state:product})
+                                        }} className="text-blue-600 hover:text-blue-800">
                                             <FiEdit size={20} />
-                                        </Link>
+                                        </button>
                                         <button onClick={() => handleDelete(product.key)} className="text-red-600 hover:text-red-800">
                                             <FiTrash2 size={20} />
                                         </button>

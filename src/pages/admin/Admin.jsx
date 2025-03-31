@@ -6,6 +6,7 @@ import { MdOutlineSpeaker } from 'react-icons/md'
 import { Link, Route, Routes } from 'react-router-dom'
 import AItems from './AdminItem'
 import AddProduct from './AddProduct'
+import UpdateItems from './UpdateItemPage'
 
 const Admin = () => {
   return (
@@ -37,6 +38,7 @@ const Admin = () => {
             <Route path='/booking' element={<h1>booking</h1>}/>
             <Route path='/items' element={<AItems/>}/>
             <Route path='/items/add' element={<AddProduct/>} /> 
+            <Route path='/items/eddit' element={<UpdateItems/>}/>
 
 
             <Route path='/users' element={<h1>user</h1>}/>
