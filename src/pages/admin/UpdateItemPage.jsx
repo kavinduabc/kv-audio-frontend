@@ -15,6 +15,8 @@ export default function AddProduct() {
   const [productDimension, setProductDimension] = useState(location.state.dimensions);
   const [productDescription, setProductDescription] = useState(location.state.description);
 
+  const backendurl = import.meta.env.VITE_BACKEND_URL
+
   const navigate = useNavigate();
  
 
@@ -30,7 +32,7 @@ export default function AddProduct() {
 
     try {
       const result = await axios.put(
-        "http://localhost:3000/api/product/"+productKey,
+        backendurl+"/api/product/"+productKey,
         {
           key: productKey,
           name: productName,

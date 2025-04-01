@@ -19,6 +19,8 @@ export default function AddProduct() {
 
     const token = localStorage.getItem("token");
 
+    const backendurl = import.meta.env.VITE_BACKEND_URL
+
     if (!token) {
       toast.error("You are not authorized to perform this task");
       return;
@@ -26,7 +28,7 @@ export default function AddProduct() {
 
     try {
       const result = await axios.post(
-        "http://localhost:3000/api/product",  
+        backendurl+"/api/product",  
         {
           key: productKey,
           name: productName,

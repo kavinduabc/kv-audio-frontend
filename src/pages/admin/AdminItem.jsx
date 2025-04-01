@@ -9,12 +9,14 @@ export default function AItems() {
     const [itemloaded, SetItemLoaded] = useState(false);
     const navigate = useNavigate()
 
+    const backendurl = import.meta.env.VITE_BACKEND_URL
+
     useEffect(() => {
 
         if(!itemloaded){
             const token = localStorage.getItem("token");
 
-        axios.get("http://localhost:3000/api/product", {
+        axios.get(backendurl+"/api/product", {
             headers: { "Authorization": `Bearer ${token}` }
         })
         .then((res) => {
@@ -38,7 +40,7 @@ export default function AItems() {
 
             const token = localStorage.getItem("token");
 
-            axios.delete(`http://localhost:3000/api/product/${key}`,{
+            axios.delete(`${backendurl}/api/product/${key}`,{
                 headers: { Authorization: `Bearer ${token}`},
             }).then(
                 (res) =>{
