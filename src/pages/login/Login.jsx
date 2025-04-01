@@ -13,8 +13,12 @@ export default function Login() {
     e.preventDefault();
     console.log(email, password);
 
+    //** import backend url in env */
+    const backendurl = import.meta.env.VITE_BACKEND_URL
+
     try {
-      const res = await axios.post("http://localhost:3000/api/users/login", {
+      //** `${backendurl}/api/user/login` */
+      const res = await axios.post(backendurl + "/api/users/login", {
         email,
         password,
       });
