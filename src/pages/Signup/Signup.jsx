@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./Ssignup.css";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -9,9 +12,26 @@ export default function SignUp() {
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
 
+  const navigate = useNavigate();
+
   function handleSubmit(e) {
     e.preventDefault();
     console.log({ firstName, lastName, email, password, address, phone });
+
+    //** validation path  */
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users`,{
+        email : email,
+        password : password ,
+        firstname : firstName,
+        lastname : lastName,
+        address : address,
+        phoneNumber : phone
+    }).then(()=>{
+        toast.success("Registration Success")
+        navigate("/login")
+    }).catch((err)=>{
+        toast.error(err?.response?.data?.error || "An error occured")
+    })
   }
 
   return (
