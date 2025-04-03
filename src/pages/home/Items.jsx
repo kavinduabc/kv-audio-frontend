@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
+import PCard from "../../components/ProductCard"
 
   export default function Items(){
     
@@ -37,7 +38,7 @@ import toast from "react-hot-toast"
             state == "success"&&
             items.map((item)=>{
               return(
-                <h1 key={item.key}>{item.name}</h1>
+                <PCard key={item.key} item={item} />
               )
             })
            }
