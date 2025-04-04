@@ -11,7 +11,7 @@ import PCard from "../../components/ProductCard"
     useEffect(()=>{
     
       //** feaching data in backend */
-      if(state == "loadong"){
+      if(state == "loading"){ 
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/product`).then((res)=>{
           setItems(res.data)
           //setState("success")
