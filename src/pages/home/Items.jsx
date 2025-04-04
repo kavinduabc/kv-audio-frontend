@@ -13,8 +13,9 @@ import PCard from "../../components/ProductCard"
       //** feaching data in backend */
       if(state == "loading"){ 
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/product`).then((res)=>{
+          console.log(res.data)
           setItems(res.data)
-          //setState("success")
+          setState("success")
        }).catch((err)=>{
           toast.error(err?.response?.data?.error||"An error occured")
           setState("error")
