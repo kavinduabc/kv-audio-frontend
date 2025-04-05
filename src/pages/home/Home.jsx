@@ -13,7 +13,7 @@ export default function Home(){
         <>
             <Header/>
 
-            <div className="h-[calc(100vh-100px)] w-full">
+            <div className="h-[calc(100vh-100px)] w-full bg-primary">
                <Routes path="/*">
                <Route  path="/" element={<HomeC/>}/> 
                <Route  path="/contact" element={<Contact/>}/> 
