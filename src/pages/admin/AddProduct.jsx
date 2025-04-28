@@ -11,35 +11,24 @@ export default function AddProduct() {
   const [productCategory, setProductCategory] = useState("audio");
   const [productDimension, setProductDimension] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [productImages,setProductImages] = useState([])
+  const [productImages, setProductImages] = useState([]);
 
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  //** Function to add a product */
   async function handleAddItem() {
-    
-     //** created the array using for store the image promises */
-    const promises =[]
-    for(let i = 0; i<productImages.length; i++){
-      console.log(productImages[i])
-      const promise = mediaUpload(productImages[i])
-      promises.push(promise)
-
-      // if(i ==5){
-      //   toast.error("you can add only 5 image")
-      //   break;
-      // }
+    if (productImages.length > 5) {
+      toast.error("You can upload maximum 5 images only.");
+      return;
     }
 
-   
-
-    
-    console.log(productKey, productName, productPrice, productCategory, productDescription, productDimension);
+    const promises = [];
+    for (let i = 0; i < productImages.length; i++) {
+      const promise = mediaUpload(productImages[i]);
+      promises.push(promise);
+    }
 
     const token = localStorage.getItem("token");
-
-    const backendurl = import.meta.env.VITE_BACKEND_URL
+    const backendurl = import.meta.env.VITE_BACKEND_URL;
 
     if (!token) {
       toast.error("You are not authorized to perform this task");
@@ -47,17 +36,10 @@ export default function AddProduct() {
     }
 
     try {
-    //   Promise.all(promises).then((result)=>{
-    //     console.log(result)
-    // }).catch((err)=>{
-    //   toast.error(err)
-    // })
-     
-    const imageUrl = await Promise.all(promises);
-
+      const imageUrl = await Promise.all(promises);
 
       const result = await axios.post(
-        backendurl+"/api/product",  
+        backendurl + "/api/product",
         {
           key: productKey,
           name: productName,
@@ -65,22 +47,22 @@ export default function AddProduct() {
           category: productCategory,
           dimensions: productDimension,
           description: productDescription,
-          image : imageUrl,
+          image: imageUrl,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json" 
+            "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
       toast.success(result.data.message);
-      navigate("/admin/items")
+      navigate("/admin/items");
     } catch (err) {
-        toast.error(err.response?.data?.error || "Something went wrong");
+      toast.error(err.response?.data?.error || "Something went wrong");
     }
-}
-
+  }
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-gray-100 py-10">
@@ -125,21 +107,27 @@ export default function AddProduct() {
         <textarea
           onChange={(e) => setProductDescription(e.target.value)}
           value={productDescription}
-          type='text'
           placeholder="Product Description"
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <input onChange={(e)=>setProductImages(e.target.value)} 
-        value={productImages} 
-        type="file" multiple
-        className="w-full p-2 border rounded"
+        <input
+          onChange={(e) => setProductImages([...e.target.files])}
+          type="file"
+          multiple
+          className="w-full p-2 border rounded"
         />
-        <button onClick={handleAddItem} className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
+        <button
+          onClick={handleAddItem}
+          className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
+        >
           Add Product
         </button>
-        <button onClick={() => navigate("/admin/items")} className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
-        Cancel
-    </button>
+        <button
+          onClick={() => navigate("/admin/items")}
+          className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-red-600 transition"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );
