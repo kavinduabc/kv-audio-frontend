@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import mediaUpload from "../../Utils/MediaUpload";
 
 export default function AddProduct() {
   const [productKey, setProductKey] = useState("");
@@ -10,11 +11,30 @@ export default function AddProduct() {
   const [productCategory, setProductCategory] = useState("audio");
   const [productDimension, setProductDimension] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [productImages,setProductImages] = useState([])
+
 
   const navigate = useNavigate()
 
   //** Function to add a product */
   async function handleAddItem() {
+    
+     //** created the array using for store the image promises */
+    const promises =[]
+    for(let i = 0; i<productImages.length; i++){
+      console.log(productImages[i])
+      const promise = mediaUpload(productImages[i])
+      promises.push(promise)
+
+      // if(i ==5){
+      //   toast.error("you can add only 5 image")
+      //   break;
+      // }
+    }
+
+   
+
+    
     console.log(productKey, productName, productPrice, productCategory, productDescription, productDimension);
 
     const token = localStorage.getItem("token");
@@ -27,6 +47,15 @@ export default function AddProduct() {
     }
 
     try {
+    //   Promise.all(promises).then((result)=>{
+    //     console.log(result)
+    // }).catch((err)=>{
+    //   toast.error(err)
+    // })
+     
+    const imageUrl = await Promise.all(promises);
+
+
       const result = await axios.post(
         backendurl+"/api/product",  
         {
@@ -36,6 +65,7 @@ export default function AddProduct() {
           category: productCategory,
           dimensions: productDimension,
           description: productDescription,
+          image : imageUrl,
         },
         {
           headers: {
@@ -98,6 +128,11 @@ export default function AddProduct() {
           type='text'
           placeholder="Product Description"
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <input onChange={(e)=>setProductImages(e.target.value)} 
+        value={productImages} 
+        type="file" multiple
+        className="w-full p-2 border rounded"
         />
         <button onClick={handleAddItem} className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
           Add Product
