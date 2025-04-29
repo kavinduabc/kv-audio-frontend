@@ -5,6 +5,7 @@ import Gallery from "./Gallary";
 import Contact from "./Contact";
 import HomeC from "./HomeControlle";
 import Error from "./Error"
+import ProductOverView from "./ProductOverView";
 
 
 
@@ -19,6 +20,7 @@ export default function Home(){
                <Route  path="/contact" element={<Contact/>}/> 
                <Route  path="/gallery" element={<Gallery/>}/> 
                <Route  path="/items" element={<Items/>}/> 
+               <Route path="/product/:key" element={<ProductOverView/>} />
                <Route path="/*" element={<Error/>}/>
                </Routes> 
             </div>

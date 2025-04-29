@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
+import mediaUpload from "../../Utils/MediaUpload";
 
 export default function AddProduct() {
     const location = useLocation();
@@ -14,13 +15,38 @@ export default function AddProduct() {
   const [productCategory, setProductCategory] = useState(location.state.category);
   const [productDimension, setProductDimension] = useState(location.state.dimensions);
   const [productDescription, setProductDescription] = useState(location.state.description);
+  const [productImages,setProductImages] = useState([]);
 
   const backendurl = import.meta.env.VITE_BACKEND_URL
 
   const navigate = useNavigate();
  
 
-  async function handleAddItem() {
+  async function handleUpadateItem() {
+
+    let updatingImages = location.state.image
+
+    //** create function for cheling the allready add images */
+    if(productImages.length > 0){
+      
+      const promises = [];
+
+      for(let i = 0;i < productImages.length; i++){
+        console.log(productImages[i]);
+        const promise = mediaUpload(productImages[i]);
+        promises.push(promise);
+
+        //** chech the images array length */
+        if(i > 5)
+        {
+          toast.error("you can add only 5 images")
+          break;
+        }
+      }
+
+      updatingImages = await Promise.all(promises)
+    }
+
     console.log(productKey, productName, productPrice, productCategory, productDescription, productDimension);
 
     const token = localStorage.getItem("token");
@@ -40,6 +66,7 @@ export default function AddProduct() {
           category: productCategory,
           dimensions: productDimension,
           description: productDescription,
+          image : updatingImages,
         },
         {
           headers: {
@@ -101,7 +128,13 @@ export default function AddProduct() {
         onChange={(e) => setProductDescription(e.target.value)}
         className="border p-2 mb-3 w-1/2"
       />
-      <button onClick={handleAddItem} className="bg-blue-500 text-white px-4 py-2 rounded">
+      <input
+          onChange={(e) => setProductImages([...e.target.files])}
+          type="file"
+          multiple
+          className="w-full p-2 border rounded"
+        />
+      <button onClick={handleUpadateItem} className="bg-blue-500 text-white px-4 py-2 rounded">
         Update Product
       </button>
     </div>
