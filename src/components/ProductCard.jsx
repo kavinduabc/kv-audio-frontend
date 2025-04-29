@@ -1,4 +1,4 @@
-
+import { Link }  from 'react-router-dom'
 
 export default function PCard({ item }) {
   return (
@@ -37,6 +37,11 @@ export default function PCard({ item }) {
               Out of Stock
             </span>
           )}
+        </div>
+        <div className="flex justify-end h-full p-4 border-t border-gray-200">
+            <Link to={"/product/"+item.key} className='w-[90%] h-[40px] bg-blue-500 text-white py- ounded-bg hover:bg-blue-600 transition'>
+            View Details
+            </Link>
         </div>
       </div>
     </div>
