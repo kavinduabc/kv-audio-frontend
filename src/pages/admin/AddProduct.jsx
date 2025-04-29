@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import mediaUpload from "../../Utils/MediaUpload";
 
 export default function AddProduct() {
   const [productKey, setProductKey] = useState("");
@@ -10,16 +11,24 @@ export default function AddProduct() {
   const [productCategory, setProductCategory] = useState("audio");
   const [productDimension, setProductDimension] = useState("");
   const [productDescription, setProductDescription] = useState("");
+  const [productImages, setProductImages] = useState([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  //** Function to add a product */
   async function handleAddItem() {
-    console.log(productKey, productName, productPrice, productCategory, productDescription, productDimension);
+    if (productImages.length > 5) {
+      toast.error("You can upload maximum 5 images only.");
+      return;
+    }
+
+    const promises = [];
+    for (let i = 0; i < productImages.length; i++) {
+      const promise = mediaUpload(productImages[i]);
+      promises.push(promise);
+    }
 
     const token = localStorage.getItem("token");
-
-    const backendurl = import.meta.env.VITE_BACKEND_URL
+    const backendurl = import.meta.env.VITE_BACKEND_URL;
 
     if (!token) {
       toast.error("You are not authorized to perform this task");
@@ -27,8 +36,10 @@ export default function AddProduct() {
     }
 
     try {
+      const imageUrl = await Promise.all(promises);
+
       const result = await axios.post(
-        backendurl+"/api/product",  
+        backendurl + "/api/product",
         {
           key: productKey,
           name: productName,
@@ -36,21 +47,22 @@ export default function AddProduct() {
           category: productCategory,
           dimensions: productDimension,
           description: productDescription,
+          image: imageUrl,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json" 
+            "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
       toast.success(result.data.message);
-      navigate("/admin/items")
+      navigate("/admin/items");
     } catch (err) {
-        toast.error(err.response?.data?.error || "Something went wrong");
+      toast.error(err.response?.data?.error || "Something went wrong");
     }
-}
-
+  }
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center bg-gray-100 py-10">
@@ -95,16 +107,27 @@ export default function AddProduct() {
         <textarea
           onChange={(e) => setProductDescription(e.target.value)}
           value={productDescription}
-          type='text'
           placeholder="Product Description"
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button onClick={handleAddItem} className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
+        <input
+          onChange={(e) => setProductImages([...e.target.files])}
+          type="file"
+          multiple
+          className="w-full p-2 border rounded"
+        />
+        <button
+          onClick={handleAddItem}
+          className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
+        >
           Add Product
         </button>
-        <button onClick={() => navigate("/admin/items")} className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition">
-        Cancel
-    </button>
+        <button
+          onClick={() => navigate("/admin/items")}
+          className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-red-600 transition"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );

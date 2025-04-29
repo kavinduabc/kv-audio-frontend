@@ -55,6 +55,8 @@ export default function AItems() {
         }
     };
 
+    
+
     return (
         <div className="w-full h-full p-6 bg-gray-100 relative flex flex-col items-center">
            { !itemloaded &&<div className="border-4 my-4 border-b-green-500 rounded-full animate-spin w-[100px] h-[100px]"></div>}
