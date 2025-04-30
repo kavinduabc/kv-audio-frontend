@@ -43,6 +43,8 @@ export default function ProductOverView(){
                   <div className="mt-4 text-sm text-gray-600">
                     <span className="font-medium">Dimensinos:</span>{product.dimentions}
                   </div>
+
+                  
             </div>
           </div>
         }
