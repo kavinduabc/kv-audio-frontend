@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { addToCart, removeFromCart } from "../Utils/Cart";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { FaArrowDown, FaArrowUp, FaTrash } from "react-icons/fa";
 
 export default function BookingItems({ productKey, quantity, refresh }) {
   const [item, setItem] = useState(null);
@@ -83,7 +83,7 @@ export default function BookingItems({ productKey, quantity, refresh }) {
           }}
           className="bg-red-500 text-white text-sm px-3 py-1 rounded-md hover:bg-red-600"
         >
-          Remove
+          <FaTrash />
         </button>
       </div>
     </div>

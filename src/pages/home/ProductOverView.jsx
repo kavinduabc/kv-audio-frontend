@@ -47,6 +47,7 @@ export default function ProductOverView(){
 
                   <button className="mt-4 bg-accent text-white px-4 py-2 rounded-md" onClick={()=>{
                     addToCart(product.key,1);
+                    toast.success("Added to Cart");
                     console.log(loadCart())
                   }}>Add to Cart</button>
             </div>
