@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import axios from "axios"
 import ImageSlider from "../../components/ImageSlider";
 import { addToCart, loadCart } from "../../Utils/Cart";
-
+import toast from "react-hot-toast";
 
 export default function ProductOverView(){
 
