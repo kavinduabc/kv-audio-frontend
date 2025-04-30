@@ -9,7 +9,7 @@ export function loadCart(){
         orderedItems : [],
         days : 1,
         startingDate :formatDate(new Date()),
-        endingDate : ormatDate(new Date())
+        endingDate : formatDate(new Date())
 
       }
       const cartString = JSON.stringify(cart);
