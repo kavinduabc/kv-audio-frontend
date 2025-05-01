@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { formatDate, loadCart } from "../../Utils/Cart"
 import BookingItems from "../../components/BookingItem";
 import axios from "axios";
@@ -9,7 +9,7 @@ export default function BookingPage() {
 
     const today = formatDate(new Date());
     const tomorrow = formatDate(new Date(Date.now() + 24 * 60 * 60 * 1000));
-
+    const [total,setTotal] = useState(0);
     const [startDate, setStartDate] = useState(today);
     const [endDate, setEndDate] = useState(tomorrow);
 
@@ -17,7 +17,30 @@ export default function BookingPage() {
 
     function reloadCart() {
         setCart(loadCart());
+        calculateTotal();
     }
+
+    function calculateTotal(){
+        const cartInfo = loadCart();
+        const dayCount = getDayCount(startDate, endDate);
+        cartInfo.startDate = startDate;
+        cartInfo.endDate = endDate;
+        cartInfo.days = dayCount;
+    
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orderes/quotetion`, cartInfo)
+            .then((res) => {
+                console.log(res.data);
+                setTotal(res.data.total)
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }
+    
+    useEffect(()=>{
+           
+        calculateTotal();
+    },[startDate,endDate])
 
     function handleBookingCreation(){
 
@@ -29,12 +52,13 @@ export default function BookingPage() {
         cart.days = dayCount;
 
         const token = localStorage.getItem("token");
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orderes`,cart,{
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orderes/`,cart,{
             headers:{
                 Authorization : `Bearer ${token}`,
-                "Content-Type": "application/json",
+               
             }
         }).then((res)=>{
+            console.log("Cart being sent:", cart);
             console.log(res.date);
             localStorage.removeItem("cart");
             toast.success("Booking Created");
@@ -94,7 +118,11 @@ export default function BookingPage() {
                     />
                 ))}
             </div>
-
+            <div className="w-full flex justify-center mt-4">
+                <p className="text-accent font-semibold">
+                    Total : {total.toFixed(2)}
+                </p>
+            </div>
             <div className="w-full flex justify-center mt-4">
                <button className="bg-accent text-white px-4 py-2 rounded-md"
                 onClick={handleBookingCreation}
