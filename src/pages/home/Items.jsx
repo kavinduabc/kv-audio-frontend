@@ -25,7 +25,7 @@ import PCard from "../../components/ProductCard"
     },[])
 
     return(
-        <div className="w-full h-full flex flex-wrap justify-center pt-[50px]">
+        <div className="w-full h-full flex flex-wrap justify-center pt-[50px] gap-4">
            
            {
             //** start codding in rendaring method  */

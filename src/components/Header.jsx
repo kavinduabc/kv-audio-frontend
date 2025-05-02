@@ -1,22 +1,39 @@
-import { FaCartShopping } from "react-icons/fa6"
-import {Link} from "react-router-dom"
+import { FaShoppingCart, FaFacebookF, FaTwitter, FaInstagram, FaUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Logo from '../components/Logo'
 
-export default function Header(){
-  return(
-    <header className="w-full h-[100px] shadow-xl flex justify-center items-center relative bg-accent text-white">
+export default function Header() {
+  return (
+    <header className="w-full h-[80px] bg-[#333] text-white flex justify-between items-center px-6 shadow-md">
+      {/* Logo and Title */}
+    <div className="flex items-center space-x-4">
+        {/* <img src="/logo.png" alt="logo" className="w-[60px] h-[60px] object-contain" /> */}
+        <Logo/>
+      </div> 
 
-        <img src="/logo.png" alt="logo" className="w-[100px] h-[100px] border-[3px] object-cover absolute
-        left-1 rounded-full"/>
-       <Link  to="/" className="text-[25px] font-bold m-1">Home</Link> 
-       <Link  to="/contact" className="text-[25px] font-bold m-1">Contact</Link> 
-       <Link  to="/gallery" className="text-[25px] font-bold m-1">gallery</Link> 
-       <Link  to="/items" className="text-[25px] font-bold m-1">Items</Link> 
+      {/* Navigation */}
+      <nav className="flex space-x-6 text-lg font-semibold">
+        <Link to="/" className="hover:text-[#aaa] transition">Home</Link>
+        <Link to="/about" className="hover:text-[#aaa] transition">About</Link>
+        <Link to="/contact" className="hover:text-[#aaa] transition">Contacts</Link>
+        <Link to="/items" className="hover:text-[#aaa] transition">Items</Link>
+      </nav>
 
-       <Link  to="/booking" className="text-[25px] font-bold m-1 absolute right-3">
-       <FaCartShopping/>
-       </Link>       
+      {/* Social + Cart */}
+      <div className="flex items-center space-x-4 text-xl">
+        <FaFacebookF className="hover:text-[#aaa] cursor-pointer" />
+        <FaTwitter className="hover:text-[#aaa] cursor-pointer" />
+        <FaInstagram className="hover:text-[#aaa] cursor-pointer" />
+
+        <div className="m-2.5 flex gap-1.5">
+        <Link to="/booking" className="hover:text-[#aaa]">
+          <FaShoppingCart />
+        </Link>
+        <Link to="/login" className="hover:text-[#aaa]">
+          <FaUser/>
+        </Link>
+        </div>
+      </div>
     </header>
-
-    
-  )
+  );
 }
