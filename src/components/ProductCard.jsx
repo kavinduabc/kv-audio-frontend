@@ -15,11 +15,11 @@ export default function PCard({ item }) {
       <div className="p-4  relative  ">
         <div className='p-2  '>
        
-        <h2 className="p-2   text-lg font-mono  font-semibold text-accent">{item.name}</h2>
+        <h2 className="p-2   text-lg font-mono  font-semibold text-[#333]">{item.name}</h2>
         
         <div className="flex justify-between items-center mt-2">
           <span className="text-accent font-bold text-lg">${item.price}</span>
-          <span className="text-sm text-gray-500">{item.category}</span>
+          <span className="text-sm text-gray-900">{item.category}</span>
         </div>
         </div>
      {
@@ -32,11 +32,11 @@ export default function PCard({ item }) {
         {/* Availability Badge */}
         <div className="mt-3">
           {item.availability ? (
-            <span className="text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-md">
+            <span className="text-xs font-semibold text-[#101eb4] bg-green-100 px-2 py-1 rounded-md">
               In Stock
             </span>
           ) : (
-            <span className="text-xs font-semibold text-red-600 bg-red-100 px-2 py-1 rounded-md">
+            <span className="text-xs font-semibold text-accent bg-red-100 px-2 py-1 rounded-md">
               Out of Stock
             </span>
           )}
@@ -45,8 +45,8 @@ export default function PCard({ item }) {
   <Link
     to={`/product/${item.key}`}
     className="w-[90%] h-[40px] flex items-center justify-center 
-               rounded-xl bg-[#367485] text-white font-medium 
-               hover:bg-[#2c5d6b] transition duration-300 shadow-md"
+               rounded-xl bg-[#333] text-white font-medium 
+               hover:bg-[#333339] transition duration-300 shadow-md"
   >
     View Details
   </Link>

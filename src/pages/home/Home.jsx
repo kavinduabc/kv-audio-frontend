@@ -7,6 +7,9 @@ import HomeC from "./HomeControlle";
 import Error from "./Error"
 import ProductOverView from "./ProductOverView";
 import BookingPage from "./Booking";
+import Footer from "../../components/Footer";
+import Login from '../login/Login'
+import SignUp from '../Signup/Signup'
 
 
 
@@ -22,10 +25,13 @@ export default function Home(){
                <Route  path="/gallery" element={<Gallery/>}/> 
                <Route path='/booking' element={<BookingPage/>}/>
                <Route  path="/items" element={<Items/>}/> 
+               <Route path='/login' element={<Login/>} />
+               <Route path='/signup' element={<SignUp/>} />
                <Route path="/product/:key" element={<ProductOverView/>} />
                <Route path="/*" element={<Error/>}/>
                </Routes> 
             </div>
+            <Footer/>
         </>
     )
 }
