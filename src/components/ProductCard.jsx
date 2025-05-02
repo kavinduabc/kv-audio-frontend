@@ -2,29 +2,32 @@ import { Link }  from 'react-router-dom'
 
 export default function PCard({ item }) {
   return (
-    <div className="w-72 bg-white shadow-lg rounded-2xl overflow-hidden transition-transform hover:scale-105">
+    <div className="w-72 h-105 bg-white shadow-lg shadow-black/40 rounded-2xl overflow-hidden transition-transform hover:scale-105">
+
       {/* Product Image */}
       <img 
         src={item.image[0]} 
         alt={item.name} 
-        className="w-full h-48 object-cover"
+        className="w-64  h-48 object-cover p-1.5"
       />
 
-      {/* Card Content */}
-      <div className="p-4">
-        {/* Product Name */}
-        <h2 className="text-lg font-semibold text-gray-800">{item.name}</h2>
-
-        {/* Price & Category */}
+     
+      <div className="p-4  relative  ">
+        <div className='p-2  '>
+       
+        <h2 className="p-2   text-lg font-mono  font-semibold text-accent">{item.name}</h2>
+        
         <div className="flex justify-between items-center mt-2">
-          <span className="text-green-600 font-bold text-lg">${item.price}</span>
+          <span className="text-accent font-bold text-lg">${item.price}</span>
           <span className="text-sm text-gray-500">{item.category}</span>
         </div>
-
-        {/* Description */}
+        </div>
+     {
+      /**  Description
         <p className="text-gray-600 text-sm mt-2 line-clamp-2">
           {item.description}
-        </p>
+        </p> */
+     }
 
         {/* Availability Badge */}
         <div className="mt-3">
@@ -38,11 +41,17 @@ export default function PCard({ item }) {
             </span>
           )}
         </div>
-        <div className="flex justify-end h-full p-4 border-t border-gray-200">
-            <Link to={"/product/"+item.key} className='w-[90%] h-[40px] bg-blue-500 text-white py- ounded-bg hover:bg-blue-600 transition'>
-            View Details
-            </Link>
-        </div>
+        <div className="flex justify-center h-full p-4 border-t border-gray-200">
+  <Link
+    to={`/product/${item.key}`}
+    className="w-[90%] h-[40px] flex items-center justify-center 
+               rounded-xl bg-[#367485] text-white font-medium 
+               hover:bg-[#2c5d6b] transition duration-300 shadow-md"
+  >
+    View Details
+  </Link>
+</div>
+
       </div>
     </div>
   );

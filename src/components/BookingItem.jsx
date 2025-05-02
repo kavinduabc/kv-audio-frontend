@@ -19,7 +19,7 @@ export default function BookingItems({ productKey, quantity, refresh }) {
           console.error(err);
           setStatus("error");
           removeFromCart(productKey);
-          refresh(); // Refresh parent list
+          refresh(); 
         });
     }
   }, [status]);
