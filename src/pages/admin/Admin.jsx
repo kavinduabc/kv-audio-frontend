@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsGraphDown} from 'react-icons/bs'
 import {BsBookmarkDash} from 'react-icons/bs'
 import { FaRegUser } from 'react-icons/fa'
@@ -8,8 +8,38 @@ import AItems from './AdminItem'
 import AddProduct from './AddProduct'
 import UpdateItems from './UpdateItemPage'
 import Logo from '../../components/Logo'
+import AdminUser from './AdminUser'
+import AdminOrdersPage from './AdminBooking'
+import axios from 'axios'
+
 
 const Admin = () => {
+
+  const [userValidated, setUserValidated] = useState(false);
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    if(!token){
+      window.location.href = "/login";
+    }
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    }).then((res)=>{
+      console.log(res.data);
+      const user = res.data;
+      if(user.role == "admin"){
+        setUserValidated(true);        
+      }else{
+        window.location.href = "/";
+      }
+      
+    }).catch((err)=>{
+      console.error(err);
+      setUserValidated(false);
+    })
+  },[])
+
   return (
      <div className='w-full h-screen flex'>
           <div className='w-[230px] h-full bg-gradient-to-b from-[#333] to-[#101eb4]'>
@@ -61,11 +91,11 @@ const Admin = () => {
             <Routes path="/*">
             
             <Route path='/dashboard' element={<h1>dashboard</h1>}/>
-            <Route path='/booking' element={<h1>booking</h1>}/>
+            <Route path='/booking' element={<AdminOrdersPage/>}/>
             <Route path='/items' element={<AItems/>}/>
             <Route path='/items/add' element={<AddProduct/>} /> 
             <Route path='/items/eddit' element={<UpdateItems/>}/>
-            <Route path='/users' element={<h1>user</h1>}/>
+            <Route path='/users' element={<AdminUser/>}/>
             
             </Routes>
           </div>
