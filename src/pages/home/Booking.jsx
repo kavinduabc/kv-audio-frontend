@@ -27,7 +27,7 @@ export default function BookingPage() {
         cartInfo.endDate = endDate;
         cartInfo.days = dayCount;
     
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orderes/quotetion`, cartInfo)
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders/quotetion`, cartInfo)
             .then((res) => {
                 console.log(res.data);
                 setTotal(res.data.total)
@@ -52,7 +52,7 @@ export default function BookingPage() {
         cart.days = dayCount;
 
         const token = localStorage.getItem("token");
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orderes/`,cart,{
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders`,cart,{
             headers:{
                 Authorization : `Bearer ${token}`,
                

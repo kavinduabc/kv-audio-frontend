@@ -11,7 +11,7 @@ export default function ImageSlider(props){
         <div className="w-full mt-[20px] h-[150px] flex justify-center">
            {
             images.map((image,index)=>{
-                return <img  key={index} src={image} alt="product" className={`w-[100px] h-[100px] mr-[2px] object-cover cursor-pointer ${image == selectedImage && "border-accent"}`} 
+                return <img  key={index} src={image} alt="product" className={`w-[100px] h-[100px] mr-[2px] object-cover  cursor-pointer ${image == selectedImage && "border-accent"}`} 
                      onClick={()=>{
                         setSelectedImage(image);
                      }}
