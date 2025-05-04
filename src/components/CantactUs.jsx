@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { FaLocationCrosshairs, FaWhatsapp } from 'react-icons/fa6'
 import { FiClock, FiMail } from 'react-icons/fi'
