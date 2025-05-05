@@ -32,7 +32,8 @@ export default function Home(){
                <Route path="/*" element={<Error/>}/>
                </Routes> 
             </div>
-            <Footer/>
+
+            
         </>
     )
 }

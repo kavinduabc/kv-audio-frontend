@@ -32,7 +32,8 @@ const Slider = () => {
   };
 
   return (
-    <div className="pt-[50px]">
+    <div className="pt-[50px] bg-gray-100">
+      <h3 className='m-3 text-2xl text-[#333] font-medium'>FEATURED PRODUCTS.</h3>
       {state === "loading" ? (
         <div className="w-full h-full flex justify-center items-center">
           <div className="w-[50px] h-[50px] border-4 rounded-full border-t-green-500 animate-spin"></div>
@@ -45,6 +46,8 @@ const Slider = () => {
   infinite={true}
   showDots={false}
   arrows={false}
+
+  className='bg-gray-100 w-full h-[400px]  items-center'
 >
   {items.map((item) => (
     <PCard key={item.key} item={item} />
