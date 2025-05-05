@@ -1,3 +1,4 @@
+import Batches from "../../components/Batches";
 import Slider from "../../components/Slider";
 import './home.css'
 import { Link} from 'react-router-dom'
@@ -25,9 +26,8 @@ export default function HomeC(){
 
             <div>
             <Slider/>
+            <Batches/>
             </div>
-
-            
         </div>
     )
 }

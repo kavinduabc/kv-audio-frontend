@@ -42,7 +42,7 @@ const Slider = () => {
         <Carousel
   responsive={responsive}
   autoPlay={true}
-  autoPlaySpeed={1000}
+  autoPlaySpeed={3000}
   infinite={true}
   showDots={false}
   arrows={false}
