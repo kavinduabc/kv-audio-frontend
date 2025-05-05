@@ -1,57 +1,52 @@
-import { Link }  from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 export default function PCard({ item }) {
   return (
-    <div className="w-72 h-105 bg-white shadow-lg shadow-black/40 rounded-2xl overflow-hidden transition-transform hover:scale-105">
-
-      {/* Product Image */}
-      <img 
-        src={item.image[0]} 
-        alt={item.name} 
-        className="w-64  h-48 object-cover p-1.5"
+    <div className="w-64 bg-white rounded-xl shadow-md hover:shadow-lg transition-transform hover:scale-105">
+      
+      {/* Image */}
+      <img
+        src={item.image[0]}
+        alt={item.name}
+        className="w-full h-40 object-contain p-2"
       />
 
-     
-      <div className="p-4  relative  ">
-        <div className='p-2  '>
-       
-        <h2 className="p-2   text-lg font-mono  font-semibold text-[#333]">{item.name}</h2>
-        
-        <div className="flex justify-between items-center mt-2">
-          <span className="text-accent font-bold text-lg">${item.price}</span>
-          <span className="text-sm text-gray-900">{item.category}</span>
-        </div>
-        </div>
-     {
-      /**  Description
-        <p className="text-gray-600 text-sm mt-2 line-clamp-2">
-          {item.description}
-        </p> */
-     }
+      {/* Content */}
+      <div className="px-4 pb-4">
+        <h2 className="text-md font-semibold mt-2 text-gray-800">{item.name}</h2>
 
-        {/* Availability Badge */}
-        <div className="mt-3">
+        <div className="flex justify-between items-center mt-1 text-sm">
+          <span className="text-red-600 font-bold">${item.price}</span>
+          <span className="text-gray-600">{item.category}</span>
+        </div>
+
+        {/* Description */}
+        <p className="text-gray-500 text-sm mt-2 line-clamp-3">
+          {item.description}
+        </p>
+
+        {/* Availability */}
+        <div className="mt-2">
           {item.availability ? (
-            <span className="text-xs font-semibold text-[#101eb4] bg-green-100 px-2 py-1 rounded-md">
+            <span className="text-xs font-semibold text-green-700 bg-green-100 px-2 py-1 rounded">
               In Stock
             </span>
           ) : (
-            <span className="text-xs font-semibold text-accent bg-red-100 px-2 py-1 rounded-md">
+            <span className="text-xs font-semibold text-red-700 bg-red-100 px-2 py-1 rounded">
               Out of Stock
             </span>
           )}
         </div>
-        <div className="flex justify-center h-full p-4 border-t border-gray-200">
-  <Link
-    to={`/product/${item.key}`}
-    className="w-[90%] h-[40px] flex items-center justify-center 
-               rounded-xl bg-[#333] text-white font-medium 
-               hover:bg-[#333339] transition duration-300 shadow-md"
-  >
-    View Details
-  </Link>
-</div>
 
+        {/* Button */}
+        <div className="mt-4">
+          <Link
+            to={`/product/${item.key}`}
+            className="block text-center bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 text-sm"
+          >
+            View Details
+          </Link>
+        </div>
       </div>
     </div>
   );
