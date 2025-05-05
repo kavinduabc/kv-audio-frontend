@@ -1,8 +1,7 @@
 import { useState } from "react";
-import "./Login.css";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast"; // Ensure Toaster is included
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -42,77 +41,65 @@ export default function Login() {
   }
 
   return (
-    <div className="m-5 flex h-screen w-full shadow-2xl">
+    <div className="m-5 flex h-screen w-full rounded-3xl overflow-hidden shadow-2xl">
     {/* Left Panel */}
-    <div className="bg-picture hidden md:flex w-1/2 bg-gradient-to-br items-center justify-center text-white px-10">
-      <div>
-        <div className="mb-6">
-          <div className="text-2xl font-bold mb-2">YOUR LOGO</div>
-        </div>
-        <h1 className="text-4xl font-bold mb-4">Hello, welcome!</h1>
-        <p className="text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nisi risus.</p>
+    <div className="bg-[#003F4E] hidden md:flex w-1/2 items-center justify-center text-white px-10">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold mb-4">Welcome Back!</h2>
+        <p className="mb-6 text-sm">Provide your personal details to use all features</p>
+        <Link to='/signup'>
+        <button className="border border-white py-2 px-6 rounded font-semibold hover:bg-white hover:text-[#003F4E] transition">
+          SIGN UP
+        </button>
+        </Link>
       </div>
     </div>
   
-    {/* Right Panel (Login Form) */}
-    <div className="w-full md:w-1/2 flex items-center justify-center bg-white">
-      <form
-        onSubmit={login}
-        className="bg-white p-10 rounded-lg shadow-lg w-[350px]"
-      >
-        <Toaster />
+    {/* Right Panel */}
+    <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-white p-10">
+      <h2 className="text-3xl font-bold mb-4">SIGN IN</h2>
   
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+      {/* Social Icons */}
+      <div className="flex gap-4 mb-6">
+        {["G+", "f", <i className="fab fa-github" />, <i className="fab fa-linkedin-in" />].map((icon, i) => (
+          <button
+            key={i}
+            className="border border-gray-400 text-gray-700 w-10 h-10 flex items-center justify-center rounded"
+          >
+            {icon}
+          </button>
+        ))}
+      </div>
   
+      <p className="text-sm mb-4 font-medium">OR</p>
+      <p className="text-xs text-gray-600 mb-4">Fill Out The Following Info For sign in</p>
+  
+      <form onSubmit={login} className="w-full max-w-[300px] space-y-4">
+       
         <input
           type="email"
-          placeholder="Email address"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full mb-4 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border rounded bg-gray-100"
+          required
         />
-  
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-4 px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border rounded bg-gray-100"
+          required
         />
-  
-        <div className="flex justify-between items-center mb-4 text-sm">
-          <label className="flex items-center">
-            <input type="checkbox" className="mr-2" />
-            Remember me
-          </label>
-          <a href="#" className="text-blue-600 hover:underline">Forgot password?</a>
-        </div>
-  
         <button
           type="submit"
-          className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          className="w-full py-2 bg-[#C6C20E] text-white font-semibold rounded hover:opacity-90 transition"
         >
-          Login
+          SIGN IN
         </button>
-  
-        <button
-          type="button"
-          className="w-full py-3 mt-3 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition"
-        >
-          Sign up
-        </button>
-  
-        <div className="mt-6 text-center text-sm text-gray-500">
-          FOLLOW
-          <div className="flex justify-center gap-4 mt-2 text-blue-600">
-            <i className="fab fa-facebook-f"></i>
-            <i className="fab fa-twitter"></i>
-            <i className="fab fa-instagram"></i>
-          </div>
-        </div>
       </form>
     </div>
   </div>
-  
-  );
+  )
 }

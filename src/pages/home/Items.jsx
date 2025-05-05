@@ -5,7 +5,7 @@ import PCard from "../../components/ProductCard"
 
   export default function Items(){
     
-    const [state,setState] = useState("loading")//loading,success,error
+    const [state,setState] = useState("loading")
     const [items,setItems] = useState([])
 
     useEffect(()=>{

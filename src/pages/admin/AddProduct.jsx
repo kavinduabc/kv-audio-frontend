@@ -12,6 +12,7 @@ export default function AddProduct() {
   const [productDimension, setProductDimension] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productImages, setProductImages] = useState([]);
+  const [featured,setFeatured] = useState(false);
 
   const navigate = useNavigate();
 
@@ -48,6 +49,7 @@ export default function AddProduct() {
           dimensions: productDimension,
           description: productDescription,
           image: imageUrl,
+          featured : featured,
         },
         {
           headers: {
@@ -116,6 +118,11 @@ export default function AddProduct() {
           multiple
           className="w-full p-2 border rounded"
         />
+        <div>
+          <input type="checkbox" onChange={(e)=>setFeatured(e.target.checked)}
+          className="mr-2" />
+        </div>
+        <span>add to home slider</span>
         <button
           onClick={handleAddItem}
           className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"

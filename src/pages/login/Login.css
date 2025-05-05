@@ -1,9 +1,0 @@
-.bg-picture{
-     
-    background-image: url('/backgound.jpeg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    position: relative;
-}
