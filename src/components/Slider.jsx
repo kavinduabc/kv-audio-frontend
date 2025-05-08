@@ -14,6 +14,7 @@ const Slider = () => {
       axios
         .get(`${import.meta.env.VITE_BACKEND_URL}/api/product/featured`)
         .then((res) => {
+          console.log(res.data);
           setItems(res.data);
           setState("success");
         })
