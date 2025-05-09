@@ -1,106 +1,80 @@
-import React, { useEffect, useState } from 'react'
-import { BsGraphDown} from 'react-icons/bs'
-import {BsBookmarkDash} from 'react-icons/bs'
-import { FaRegUser } from 'react-icons/fa'
-import { MdOutlineSpeaker } from 'react-icons/md'
-import { Link, Route, Routes } from 'react-router-dom'
-import AItems from './AdminItem'
-import AddProduct from './AddProduct'
-import UpdateItems from './UpdateItemPage'
-import Logo from '../../components/Logo'
-import AdminUser from './AdminUser'
-import AdminOrdersPage from './AdminBooking'
-import axios from 'axios'
-
+import React, { useEffect, useState } from 'react';
+import { BsGraphDown, BsBookmarkDash } from 'react-icons/bs';
+import { FaRegUser } from 'react-icons/fa';
+import { MdOutlineSpeaker } from 'react-icons/md';
+import { Link, Route, Routes } from 'react-router-dom';
+import AItems from './AdminItem';
+import AddProduct from './AddProduct';
+import UpdateItems from './UpdateItemPage';
+import Logo from '../../components/Logo';
+import AdminUser from './AdminUser';
+import AdminOrdersPage from './AdminBooking';
+import axios from 'axios';
 
 const Admin = () => {
-
   const [userValidated, setUserValidated] = useState(false);
-  useEffect(()=>{
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
-    if(!token){
+    if (!token) {
       window.location.href = "/login";
     }
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/`,{
-      headers:{
-        Authorization: `Bearer ${token}`
-      }
-    }).then((res)=>{
-      console.log(res.data);
+
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/`, {
+      headers: { Authorization: `Bearer ${token}` }
+    }).then((res) => {
       const user = res.data;
-      if(user.role == "admin"){
-        setUserValidated(true);        
-      }else{
+      if (user.role === "admin") {
+        setUserValidated(true);
+      } else {
         window.location.href = "/";
       }
-      
-    }).catch((err)=>{
+    }).catch((err) => {
       console.error(err);
       setUserValidated(false);
-    })
-  },[])
+    });
+  }, []);
 
   return (
-     <div className='w-full h-screen flex'>
-          <div className='w-[230px] h-full bg-gradient-to-b from-[#333] to-[#101eb4]'>
-
-
-            <div className='p-2 mt-3'>
-              <Logo/>
-            </div>
-
-          <div className="flex flex-col p-1 m-1">
-           <Link to="/admin/dashboard" className="w-full">
-           <button className="w-full h-[45px] text-lg font-semibold flex justify-center items-center gap-2  bg-primary text-secondary rounded-xl shadow-md hover:bg-[--color-secondary] hover:text-[acce] transition duration-300">
-           <BsGraphDown className="text-xl" />
-            Dashboard
-           </button>
-           </Link>
-          </div>
-
-
-          <div className="flex flex-col p-1 m-1">
-           <Link to="/admin/booking" className="w-full">
-           <button className="w-full h-[45px] text-lg font-semibold flex justify-center items-center gap-2  bg-primary text-secondary rounded-xl shadow-md hover:bg-[--color-secondary] hover:text-[acce] transition duration-300">
-           <BsBookmarkDash className="text-xl" />
-            Booking 
-           </button>
-           </Link>
-          </div>
-
-          <div className="flex flex-col p-1 m-1">
-           <Link to="/admin/items" className="w-full">
-           <button className="w-full h-[45px] text-lg font-semibold flex justify-center items-center gap-2  bg-primary text-secondary rounded-xl shadow-md hover:bg-[--color-secondary] hover:text-[acce] transition duration-300">
-           <MdOutlineSpeaker className="text-xl" />
-            Items
-           </button>
-           </Link>
-          </div>
-
-          <div className="flex flex-col p-1 m-1">
-           <Link to="/admin/users" className="w-full">
-           <button className="w-full h-[45px] text-lg font-semibold flex justify-center items-center gap-2  bg-primary text-secondary rounded-xl shadow-md hover:bg-[--color-secondary] hover:text-[acce] transition duration-300">
-           <FaRegUser className="text-xl" />
-            Users
-           </button>
-           </Link>
-          </div>
-
-          </div>
-          <div className='w-[calc(100vw-200px)] bg-primary '>
-            <Routes path="/*">
-            
-            <Route path='/dashboard' element={<h1>dashboard</h1>}/>
-            <Route path='/booking' element={<AdminOrdersPage/>}/>
-            <Route path='/items' element={<AItems/>}/>
-            <Route path='/items/add' element={<AddProduct/>} /> 
-            <Route path='/items/eddit' element={<UpdateItems/>}/>
-            <Route path='/users' element={<AdminUser/>}/>
-            
-            </Routes>
-          </div>
+    <div className="flex min-h-screen w-full bg-gray-100 text-gray-800">
+      
+      {/* Sidebar */}
+      <aside className="w-[230px] bg-[#2e2e2e] text-white shadow-lg flex flex-col">
+        <div className="p-4">
+          <Logo />
         </div>
-  )
-}
 
-export default Admin
+        <nav className="mt-6 flex flex-col space-y-2 px-4">
+          <AdminNavLink to="/admin/dashboard" icon={<BsGraphDown />} text="Dashboard" />
+          <AdminNavLink to="/admin/booking" icon={<BsBookmarkDash />} text="Booking" />
+          <AdminNavLink to="/admin/items" icon={<MdOutlineSpeaker />} text="Items" />
+          <AdminNavLink to="/admin/users" icon={<FaRegUser />} text="Users" />
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-grow p-6 bg-white rounded-tl-3xl shadow-inner">
+        <Routes>
+          <Route path="/dashboard" element={<h1 className="text-2xl font-bold">Dashboard</h1>} />
+          <Route path="/booking" element={<AdminOrdersPage />} />
+          <Route path="/items" element={<AItems />} />
+          <Route path="/items/add" element={<AddProduct />} />
+          <Route path="/items/eddit" element={<UpdateItems />} />
+          <Route path="/users" element={<AdminUser />} />
+        </Routes>
+      </main>
+    </div>
+  );
+};
+
+// Navigation Button Component
+const AdminNavLink = ({ to, icon, text }) => (
+  <Link to={to}>
+    <div className="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-[#C6C20E] hover:text-black transition">
+      <span className="text-xl">{icon}</span>
+      <span className="text-sm font-medium">{text}</span>
+    </div>
+  </Link>
+);
+
+export default Admin;

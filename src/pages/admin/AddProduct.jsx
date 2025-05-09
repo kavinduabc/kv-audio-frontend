@@ -12,36 +12,31 @@ export default function AddProduct() {
   const [productDimension, setProductDimension] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productImages, setProductImages] = useState([]);
-  const [featured,setFeatured] = useState(false);
-  const [homeProducts,setHomeProducts]= useState(false)
+  const [featured, setFeatured] = useState(false);
+  const [homeProducts, setHomeProducts] = useState(false);
 
   const navigate = useNavigate();
 
   async function handleAddItem() {
     if (productImages.length > 5) {
-      toast.error("You can upload maximum 5 images only.");
+      toast.error("You can upload a maximum of 5 images.");
       return;
-    }
-
-    const promises = [];
-    for (let i = 0; i < productImages.length; i++) {
-      const promise = mediaUpload(productImages[i]);
-      promises.push(promise);
     }
 
     const token = localStorage.getItem("token");
     const backendurl = import.meta.env.VITE_BACKEND_URL;
-
     if (!token) {
       toast.error("You are not authorized to perform this task");
       return;
     }
 
     try {
-      const imageUrl = await Promise.all(promises);
+      const imageUrls = await Promise.all(
+        productImages.map((img) => mediaUpload(img))
+      );
 
       const result = await axios.post(
-        backendurl + "/api/product",
+        `${backendurl}/api/product`,
         {
           key: productKey,
           name: productName,
@@ -49,18 +44,18 @@ export default function AddProduct() {
           category: productCategory,
           dimensions: productDimension,
           description: productDescription,
-          image: imageUrl,
-          featured : featured,
-          homepProduct :homeProducts
+          image: imageUrls,
+          featured,
+          homepProduct: homeProducts,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          withCredentials: true,
         }
       );
+
       toast.success(result.data.message);
       navigate("/admin/items");
     } catch (err) {
@@ -69,77 +64,90 @@ export default function AddProduct() {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center bg-gray-100 py-10">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Add Product</h1>
-      <div className="w-[400px] bg-white shadow-lg rounded-lg p-6 flex flex-col gap-4">
+    <div className="p-6">
+      <h1 className="text-2xl font-semibold mb-6">Add Product</h1>
+
+      <div className="max-w-xl bg-white p-6 rounded-lg shadow-md flex flex-col gap-4">
         <input
-          onChange={(e) => setProductKey(e.target.value)}
-          value={productKey}
           type="text"
           placeholder="Product Key"
-          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={productKey}
+          onChange={(e) => setProductKey(e.target.value)}
+          className="border px-3 py-2 rounded"
         />
         <input
-          onChange={(e) => setProductName(e.target.value)}
-          value={productName}
           type="text"
           placeholder="Product Name"
-          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+          className="border px-3 py-2 rounded"
         />
         <input
-          onChange={(e) => setProductPrice(e.target.value)}
-          value={productPrice}
           type="number"
           placeholder="Product Price"
-          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={productPrice}
+          onChange={(e) => setProductPrice(e.target.value)}
+          className="border px-3 py-2 rounded"
         />
         <select
           value={productCategory}
           onChange={(e) => setProductCategory(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="border px-3 py-2 rounded"
         >
           <option value="audio">Audio</option>
           <option value="light">Light</option>
         </select>
         <input
-          onChange={(e) => setProductDimension(e.target.value)}
-          value={productDimension}
           type="text"
-          placeholder="Product Dimension"
-          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Product Dimensions"
+          value={productDimension}
+          onChange={(e) => setProductDimension(e.target.value)}
+          className="border px-3 py-2 rounded"
         />
         <textarea
-          onChange={(e) => setProductDescription(e.target.value)}
-          value={productDescription}
           placeholder="Product Description"
-          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={productDescription}
+          onChange={(e) => setProductDescription(e.target.value)}
+          className="border px-3 py-2 rounded"
         />
-        <input
-          onChange={(e) => setProductImages([...e.target.files])}
-          type="file"
-          multiple
-          className="w-full p-2 border rounded"
-        />
-        <div>
-          <input type="checkbox" onChange={(e)=>setFeatured(e.target.checked)}
-          className="mr-2" />
-        </div>
-        <span>add to home slider</span>
 
         <div>
-          <input type="checkbox" onChange={(e)=>setHomeProducts(e.target.checked)}
-          className="mr-2" />
+          <label className="font-medium mb-1 block">Upload Images (max 5)</label>
+          <input
+            type="file"
+            multiple
+            onChange={(e) => setProductImages([...e.target.files])}
+            className="border px-3 py-2 rounded w-full"
+          />
         </div>
-        <span>add to home page</span>
+
+        <div className="flex items-center gap-2 mt-2">
+          <input
+            type="checkbox"
+            onChange={(e) => setFeatured(e.target.checked)}
+            checked={featured}
+          />
+          <label>Mark as Featured</label>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            onChange={(e) => setHomeProducts(e.target.checked)}
+            checked={homeProducts}
+          />
+          <label>Add to Home Page</label>
+        </div>
+
         <button
           onClick={handleAddItem}
-          className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
+          className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
         >
           Add Product
         </button>
         <button
           onClick={() => navigate("/admin/items")}
-          className="w-full bg-red-500 text-white py-2 rounded-lg font-semibold hover:bg-red-600 transition"
+          className="bg-red-500 text-white py-2 rounded hover:bg-red-600"
         >
           Cancel
         </button>

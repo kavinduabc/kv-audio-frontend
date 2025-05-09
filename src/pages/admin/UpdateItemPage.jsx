@@ -4,53 +4,36 @@ import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import mediaUpload from "../../Utils/MediaUpload";
 
-export default function AddProduct() {
-    const location = useLocation();
+export default function UpdateProduct() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    console.log(location);
-
-  const [productKey, setProductKey] = useState(location.state.key);
+  const [productKey] = useState(location.state.key);
   const [productName, setProductName] = useState(location.state.name);
   const [productPrice, setProductPrice] = useState(location.state.price);
   const [productCategory, setProductCategory] = useState(location.state.category);
   const [productDimension, setProductDimension] = useState(location.state.dimensions);
   const [productDescription, setProductDescription] = useState(location.state.description);
-  const [productImages,setProductImages] = useState([]);
+  const [productImages, setProductImages] = useState([]);
+  const [featured, setFeatured] = useState(location.state.featured || false);
+  const [homeProducts, setHomeProducts] = useState(location.state.homepProduct || false);
 
-  const backendurl = import.meta.env.VITE_BACKEND_URL
+  const backendurl = import.meta.env.VITE_BACKEND_URL;
 
-  const navigate = useNavigate();
- 
+  async function handleUpdateItem() {
+    let updatingImages = location.state.image;
 
-  async function handleUpadateItem() {
-
-    let updatingImages = location.state.image
-
-    //** create function for cheling the allready add images */
-    if(productImages.length > 0){
-      
-      const promises = [];
-
-      for(let i = 0;i < productImages.length; i++){
-        console.log(productImages[i]);
-        const promise = mediaUpload(productImages[i]);
-        promises.push(promise);
-
-        //** chech the images array length */
-        if(i > 5)
-        {
-          toast.error("you can add only 5 images")
-          break;
-        }
-      }
-
-      updatingImages = await Promise.all(promises)
+    if (productImages.length > 5) {
+      toast.error("You can upload a maximum of 5 images.");
+      return;
     }
 
-    console.log(productKey, productName, productPrice, productCategory, productDescription, productDimension);
+    if (productImages.length > 0) {
+      const promises = productImages.map((img) => mediaUpload(img));
+      updatingImages = await Promise.all(promises);
+    }
 
     const token = localStorage.getItem("token");
-
     if (!token) {
       toast.error("You are not authorized to perform this task");
       return;
@@ -58,7 +41,7 @@ export default function AddProduct() {
 
     try {
       const result = await axios.put(
-        backendurl+"/api/product/"+productKey,
+        `${backendurl}/api/product/${productKey}`,
         {
           key: productKey,
           name: productName,
@@ -66,7 +49,9 @@ export default function AddProduct() {
           category: productCategory,
           dimensions: productDimension,
           description: productDescription,
-          image : updatingImages,
+          image: updatingImages,
+          featured,
+          homepProduct: homeProducts,
         },
         {
           headers: {
@@ -75,6 +60,7 @@ export default function AddProduct() {
           },
         }
       );
+
       toast.success(result.data.message);
       navigate("/admin/items");
     } catch (err) {
@@ -83,60 +69,93 @@ export default function AddProduct() {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center bg-gray-100 py-10">
-      <h1 className="text-2xl font-bold mb-5">Update Product</h1>
-      <input
-        disabled
-        type="text"
-        placeholder="Product Key"
-        value={productKey}
-        onChange={(e) => setProductKey(e.target.value)}
-        className="border p-2 mb-3 w-1/2"
-      />
-      <input
-        type="text"
-        placeholder="Product Name"
-        value={productName}
-        onChange={(e) => setProductName(e.target.value)}
-        className="border p-2 mb-3 w-1/2"
-      />
-      <input
-        type="number"
-        placeholder="Product Price"
-        value={productPrice}
-        onChange={(e) => setProductPrice(Number(e.target.value))}
-        className="border p-2 mb-3 w-1/2"
-      />
-      <select
-        value={productCategory}
-        onChange={(e) => setProductCategory(e.target.value)}
-        className="border p-2 mb-3 w-1/2"
-      >
-        <option value="audio">Audio</option>
-        <option value="video">Video</option>
-      </select>
-      <input
-        type="text"
-        placeholder="Product Dimension"
-        value={productDimension}
-        onChange={(e) => setProductDimension(e.target.value)}
-        className="border p-2 mb-3 w-1/2"
-      />
-      <textarea
-        placeholder="Product Description"
-        value={productDescription}
-        onChange={(e) => setProductDescription(e.target.value)}
-        className="border p-2 mb-3 w-1/2"
-      />
-      <input
-          onChange={(e) => setProductImages([...e.target.files])}
-          type="file"
-          multiple
-          className="w-full p-2 border rounded"
+    <div className="p-6">
+      <h1 className="text-2xl font-semibold mb-6">Update Product</h1>
+
+      <div className="max-w-xl bg-white p-6 rounded-lg shadow-md flex flex-col gap-4">
+        <input
+          type="text"
+          disabled
+          value={productKey}
+          className="border px-3 py-2 rounded bg-gray-100 cursor-not-allowed"
         />
-      <button onClick={handleUpadateItem} className="bg-blue-500 text-white px-4 py-2 rounded">
-        Update Product
-      </button>
+        <input
+          type="text"
+          placeholder="Product Name"
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+          className="border px-3 py-2 rounded"
+        />
+        <input
+          type="number"
+          placeholder="Product Price"
+          value={productPrice}
+          onChange={(e) => setProductPrice(Number(e.target.value))}
+          className="border px-3 py-2 rounded"
+        />
+        <select
+          value={productCategory}
+          onChange={(e) => setProductCategory(e.target.value)}
+          className="border px-3 py-2 rounded"
+        >
+          <option value="audio">Audio</option>
+          <option value="light">Light</option>
+        </select>
+        <input
+          type="text"
+          placeholder="Product Dimensions"
+          value={productDimension}
+          onChange={(e) => setProductDimension(e.target.value)}
+          className="border px-3 py-2 rounded"
+        />
+        <textarea
+          placeholder="Product Description"
+          value={productDescription}
+          onChange={(e) => setProductDescription(e.target.value)}
+          className="border px-3 py-2 rounded"
+        />
+
+        <div>
+          <label className="font-medium mb-1 block">Upload New Images (optional, max 5)</label>
+          <input
+            type="file"
+            multiple
+            onChange={(e) => setProductImages([...e.target.files])}
+            className="border px-3 py-2 rounded w-full"
+          />
+        </div>
+
+        <div className="flex items-center gap-2 mt-2">
+          <input
+            type="checkbox"
+            onChange={(e) => setFeatured(e.target.checked)}
+            checked={featured}
+          />
+          <label>Mark as Featured</label>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            onChange={(e) => setHomeProducts(e.target.checked)}
+            checked={homeProducts}
+          />
+          <label>Add to Home Page</label>
+        </div>
+
+        <button
+          onClick={handleUpdateItem}
+          className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        >
+          Update Product
+        </button>
+        <button
+          onClick={() => navigate("/admin/items")}
+          className="bg-red-500 text-white py-2 rounded hover:bg-red-600"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 }

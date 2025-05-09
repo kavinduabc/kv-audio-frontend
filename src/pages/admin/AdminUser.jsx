@@ -9,15 +9,9 @@ export default function AdminUsersPage() {
 		const fetchUsers = async () => {
 			try {
 				const token = localStorage.getItem("token");
-				const res = await axios.get(
-					`${import.meta.env.VITE_BACKEND_URL}/api/users/all`,
-					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				);
-				console.log(res.data);
+				const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/all`, {
+					headers: { Authorization: `Bearer ${token}` },
+				});
 				setUsers(res.data);
 			} catch (error) {
 				console.error("Error fetching users:", error);
@@ -25,69 +19,82 @@ export default function AdminUsersPage() {
 				setLoading(false);
 			}
 		};
-        if(loading){
-            fetchUsers();
-        }
+
+		if (loading) fetchUsers();
 	}, [loading]);
 
-    function handleBlockUser(email){
-    
-        const token = localStorage.getItem("token");
-
-        axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/users/block/${email}`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then(()=>{
-            setLoading(true);
-        }).catch((err)=>{
-            console.error(err);
-        })
-    }
+	const handleBlockUser = (email) => {
+		const token = localStorage.getItem("token");
+		axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/users/block/${email}`, {}, {
+			headers: { Authorization: `Bearer ${token}` }
+		})
+		.then(() => setLoading(true))
+		.catch((err) => console.error(err));
+	};
 
 	return (
-		<div className="p-6">
-			<h1 className="text-2xl font-semibold mb-4">Admin Users</h1>
+		<div className="w-full p-6">
+			<div className="mb-6 flex justify-between items-center">
+				<h2 className="text-2xl font-semibold text-gray-800">Manage Users</h2>
+			</div>
+
 			{loading ? (
-				<p className="text-center text-gray-600">Loading...</p>
+				<div className="flex justify-center items-center my-12">
+					<div className="border-4 border-b-blue-500 rounded-full animate-spin w-16 h-16"></div>
+				</div>
 			) : (
-				<div className="overflow-x-auto">
-					<table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
-						<thead className="bg-gray-200">
+				<div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+					<table className="w-full table-auto text-sm text-left">
+						<thead className="bg-gray-100 text-gray-700 uppercase">
 							<tr>
-								<th className="px-4 py-2 text-left">Profile</th>
-								<th className="px-4 py-2 text-left">Name</th>
-								<th className="px-4 py-2 text-left">Email</th>
-								<th className="px-4 py-2 text-left">Role</th>
-								<th className="px-4 py-2 text-left">Phone</th>
-								<th className="px-4 py-2 text-left">Address</th>
-								<th className="px-4 py-2 text-left">Status</th>
+								<th className="px-4 py-3">Profile</th>
+								<th className="px-4 py-3">Name</th>
+								<th className="px-4 py-3">Email</th>
+								<th className="px-4 py-3">Role</th>
+								<th className="px-4 py-3">Phone</th>
+								<th className="px-4 py-3">Address</th>
+								<th className="px-4 py-3">Status</th>
 							</tr>
 						</thead>
 						<tbody>
-							{users.map((user) => (
-								<tr key={user._id} className="border-t hover:bg-gray-100">
-									<td className="px-4 py-2">
-										<img
-											src={
-												user.profilePicture || "https://via.placeholder.com/50"
-											}
-											alt="Profile"
-											className="w-10 h-10 rounded-full"
-										/>
+							{users.length > 0 ? (
+								users.map((user) => (
+									<tr key={user._id} className="border-b hover:bg-gray-50">
+										<td className="px-4 py-3">
+											<img
+												src={user.profilePicture || "https://via.placeholder.com/50"}
+												alt="Profile"
+												className="w-10 h-10 rounded-full object-cover"
+											/>
+										</td>
+										<td className="px-4 py-3">
+											{user.firstName} {user.lastName}
+										</td>
+										<td className="px-4 py-3">{user.email}</td>
+										<td className="px-4 py-3 capitalize">{user.role}</td>
+										<td className="px-4 py-3">{user.phone || user.phoneNumber}</td>
+										<td className="px-4 py-3">{user.address}</td>
+										<td className="px-4 py-3">
+											<button
+												onClick={() => handleBlockUser(user.email)}
+												className={`px-3 py-1 rounded-full text-xs font-medium shadow-sm ${
+													user.isBlocked
+														? "bg-red-100 text-red-700 hover:bg-red-200"
+														: "bg-green-100 text-green-700 hover:bg-green-200"
+												}`}
+											>
+												{user.isBlocked ? "BLOCKED" : "ACTIVE"}
+											</button>
+										</td>
+									</tr>
+								))
+							) : (
+								<tr>
+									<td colSpan="7" className="text-center py-6 text-gray-500">
+										No users found.
 									</td>
-									<td className="px-4 py-2">
-										{user.firstName} {user.lastName}
-									</td>
-									<td className="px-4 py-2">{user.email}</td>
-									<td className="px-4 py-2 capitalize">{user.role}</td>
-									<td className="px-4 py-2">
-										{user.phone || user.phoneNumber}
-									</td>
-									<td className="px-4 py-2">{user.address}</td>
-									<td onClick={()=>{handleBlockUser(user.email)}} className="px-4 py-2 cursor-pointer">{user.isBlocked?"BLOCKED":"ACTIVE"}</td>
 								</tr>
-							))}
+							)}
 						</tbody>
 					</table>
 				</div>
