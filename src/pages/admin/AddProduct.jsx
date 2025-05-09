@@ -13,6 +13,7 @@ export default function AddProduct() {
   const [productDescription, setProductDescription] = useState("");
   const [productImages, setProductImages] = useState([]);
   const [featured,setFeatured] = useState(false);
+  const [homeProducts,setHomeProducts]= useState(false)
 
   const navigate = useNavigate();
 
@@ -50,6 +51,7 @@ export default function AddProduct() {
           description: productDescription,
           image: imageUrl,
           featured : featured,
+          homepProduct :homeProducts
         },
         {
           headers: {
@@ -123,6 +125,12 @@ export default function AddProduct() {
           className="mr-2" />
         </div>
         <span>add to home slider</span>
+
+        <div>
+          <input type="checkbox" onChange={(e)=>setHomeProducts(e.target.checked)}
+          className="mr-2" />
+        </div>
+        <span>add to home page</span>
         <button
           onClick={handleAddItem}
           className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
