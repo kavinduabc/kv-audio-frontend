@@ -16,7 +16,7 @@ export default function PCard({ item }) {
         <h2 className="text-md font-semibold mt-2 text-gray-800">{item.name}</h2>
 
         <div className="flex justify-between items-center mt-1 text-sm">
-          <span className="text-red-600 font-bold">${item.price}</span>
+          <span className="text-red-600 font-bold">{item.price}</span>
           <span className="text-gray-600">{item.category}</span>
         </div>
 
