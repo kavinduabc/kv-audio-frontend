@@ -52,12 +52,15 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Get in Touch */}
+        
         <div>
-          <h2 className="text-xl font-semibold mb-4 border-b border-gray-600 pb-2">GET IN TOUCH</h2>
+          <h2 className="text-xl font-semibold mb-4 border-b border-gray-600 pb-2">About US</h2>
           <ul className="space-y-2 text-gray-300">
-            <li className="hover:text-white cursor-pointer">+1234567890</li>
-            <li className="hover:text-white cursor-pointer">abc2gmail.com</li>
+            <li className="hover:text-white ">At KV-Audio, we deliver high-performance audio solutions for events,
+               venues, and installations 
+              of all sizes. Our goal is to ensure powerful, crystal-clear sound that enhances every experience.</li>
+            <li className="hover:text-white ">We provide tailored audio solutions with expert support and the latest technology. 
+              Our team ensures every setup meets your needs, delivering immersive sound and complete satisfaction.</li>
           </ul>
         </div>
       </div>

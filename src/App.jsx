@@ -4,6 +4,7 @@ import Home from './pages/home/Home'
 import Testing from './components/Testing'
 // import Login from './pages/login/Login'
 import { Toaster } from 'react-hot-toast'
+import Footer from './components/Footer'
 // import SignUp from './pages/Signup/Signup'
 
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/*' element={<Home/>} />
         
       </Routes>
+      
     </BrowserRouter>
   )
 }
