@@ -7,7 +7,7 @@ import HomeC from "./HomeControlle";
 import Error from "./Error"
 import ProductOverView from "./ProductOverView";
 import BookingPage from "./Booking";
-import Footer from "../../components/Footer";
+
 import Login from '../login/Login'
 import SignUp from '../Signup/Signup'
 
