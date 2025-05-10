@@ -14,7 +14,7 @@ export default function Header() {
       {/* Navigation */}
       <nav className="flex space-x-6 text-lg font-semibold">
         <Link to="/" className="hover:text-[#aaa] transition">Home</Link>
-        <Link to="/about" className="hover:text-[#aaa] transition">About</Link>
+        <Link to="/about" className="hover:text-[#aaa] transition">Gallery</Link>
         <Link to="/contact" className="hover:text-[#aaa] transition">Contacts</Link>
         <Link to="/items" className="hover:text-[#aaa] transition">Items</Link>
       </nav>
