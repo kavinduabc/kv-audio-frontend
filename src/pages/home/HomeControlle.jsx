@@ -5,7 +5,8 @@ import HomePageItems from "../../components/HomePageItems";
 import Slider from "../../components/Slider";
 import './home.css'
 import Footer from "../../components/Footer"
-import { Link} from 'react-router-dom'
+import { Link, Route,Routes} from 'react-router-dom'
+
 
 
 export default function HomeC(){
@@ -15,10 +16,14 @@ export default function HomeC(){
          <div className="w-[90%] h-[350px] mx-auto flex">
 
          <div className="w-[20%] bg-white p-6 shadow-md flex flex-col justify-start gap-6 ">
+
+          <Link to="/uprofile">
     <div className="flex items-center gap-3 text-gray-700 hover:text-accent cursor-pointer">
       <FaRegUserCircle className="text-2xl" />
       <h3 className="text-lg font-semibold">User Profile</h3>
     </div>
+    </Link>
+
     <div className="flex items-center gap-3 text-gray-700 hover:text-accent cursor-pointer">
       <MdOutlinePreview className="text-2xl" />
       <h3 className="text-lg font-semibold">View Reviews</h3>
