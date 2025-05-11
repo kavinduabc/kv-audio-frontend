@@ -11,6 +11,7 @@ export default function SignUp() {
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("customer");
+  const [userImage, setUserImage] = useState(null);
 
   const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ export default function SignUp() {
         address,
         phoneNumber: phone,
         role,
+        // userImage upload handling will need to be implemented separately if needed
       })
       .then(() => {
         toast.success("Registration Success");
@@ -37,25 +39,23 @@ export default function SignUp() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f4f4f4]">
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    <div className="min-h-screen flex items-center justify-center bg-[#f4f4f4] px-4">
+      <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
         
-       
-        <div className="bg-[#2E2E2E] text-white flex flex-col items-center justify-center p-10 hidden md:flex">
-          <h2 className="text-3xl font-bold mb-4">Welcome Back!</h2>
-          <p className="text-sm mb-6 text-center">
-            Already have an account? Sign in to explore KV Audio.
-          </p>
+        {/* Left Panel */}
+        <div className="bg-[#2E2E2E] text-white flex flex-col items-center justify-center p-12 space-y-4 hidden md:flex">
+          <h2 className="text-4xl font-bold">Welcome Back!</h2>
+          <p className="text-center text-sm">Already have an account? Sign in to explore KV Audio.</p>
           <Link to="/login">
-            <button className="bg-white text-[#2E2E2E] px-6 py-2 rounded font-semibold hover:bg-accent hover:text-white transition">
+            <button className="mt-4 bg-white text-[#2E2E2E] px-6 py-2 rounded font-semibold hover:bg-[#FF5722] hover:text-white transition duration-200">
               SIGN IN
             </button>
           </Link>
         </div>
 
-      
-        <div className="flex flex-col justify-center items-center p-10">
-          <h2 className="text-3xl font-bold text-[#2E2E2E] mb-6">Sign Up</h2>
+        {/* Right Panel */}
+        <div className="flex flex-col justify-center items-center p-12">
+          <h2 className="text-4xl font-bold text-[#2E2E2E] mb-8">Sign Up</h2>
 
           <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-4">
             <input
@@ -63,7 +63,7 @@ export default function SignUp() {
               placeholder="First Name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
             <input
@@ -71,7 +71,7 @@ export default function SignUp() {
               placeholder="Last Name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
             <input
@@ -79,7 +79,7 @@ export default function SignUp() {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
             <input
@@ -87,7 +87,7 @@ export default function SignUp() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
             <input
@@ -95,7 +95,7 @@ export default function SignUp() {
               placeholder="Address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
             <input
@@ -103,21 +103,27 @@ export default function SignUp() {
               placeholder="Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
               required
             />
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100"
+              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
             >
               <option value="customer">Customer</option>
               <option value="admin">Admin</option>
             </select>
+            <input
+              type="file"
+              placeholder="user image "
+              onChange={(e) => setUserImage(e.target.files[0])}
+              className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
 
             <button
               type="submit"
-              className="w-full py-2 bg-accent text-white font-semibold rounded hover:opacity-90 transition"
+              className="w-full py-2 bg-[#FF5722] text-white font-semibold rounded hover:bg-[#e64a19] transition duration-200"
             >
               SIGN UP
             </button>
