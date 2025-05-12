@@ -1,5 +1,5 @@
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
 
@@ -18,16 +18,22 @@ export default function SignUp() {
   function handleSubmit(e) {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append("firstname", firstName);
+    formData.append("lastname", lastName);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("address", address);
+    formData.append("phoneNumber", phone);
+    formData.append("role", role);
+    formData.append("profilePicture", userImage);
+
+
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
-        firstname: firstName,
-        lastname: lastName,
-        email,
-        password,
-        address,
-        phoneNumber: phone,
-        role,
-        // userImage upload handling will need to be implemented separately if needed
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then(() => {
         toast.success("Registration Success");
@@ -41,7 +47,6 @@ export default function SignUp() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#f4f4f4] px-4">
       <div className="w-full max-w-5xl bg-white rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
-        
         {/* Left Panel */}
         <div className="bg-[#2E2E2E] text-white flex flex-col items-center justify-center p-12 space-y-4 hidden md:flex">
           <h2 className="text-4xl font-bold">Welcome Back!</h2>
@@ -116,7 +121,6 @@ export default function SignUp() {
             </select>
             <input
               type="file"
-              placeholder="user image "
               onChange={(e) => setUserImage(e.target.files[0])}
               className="w-full px-4 py-2 border border-gray-300 rounded bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
             />

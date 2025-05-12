@@ -32,10 +32,19 @@ const UserProfile = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h2>{user.firstname} {user.lastname}</h2>
-      <p>Email: {user.email}</p>
-      <p>Phone: {user.phoneNumber}</p>
+    <div className='w-full p-1 h-screen flex flex-col '>
+     <div className='w-[25%] h-full bg-gray-100'>
+       <div>
+       <img src={`http://localhost:3000/uploads/${user.profilePicture}`} alt="Profile" /> 
+       </div>
+       <div>
+       <h2>{user.firstname} {user.lastname}</h2>
+       <p>Email: {user.email}</p>
+       <p>Phone: {user.phoneNumber}</p>
+       </div>
+     </div>
+    
+      
     </div>
   );
 };

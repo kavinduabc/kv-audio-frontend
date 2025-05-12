@@ -61,14 +61,14 @@ export default function AdminUsersPage() {
 								users.map((user) => (
 									<tr key={user._id} className="border-b hover:bg-gray-50">
 										<td className="px-4 py-3">
-											<img
-												src={user.profilePicture || "https://via.placeholder.com/50"}
-												alt="Profile"
-												className="w-10 h-10 rounded-full object-cover"
-											/>
+										<img
+                                         src={user.profilePicture || "https://via.placeholder.com/50"}
+                                         alt="Profile"
+                                         className="w-10 h-10 rounded-full object-cover"
+                                        />
 										</td>
 										<td className="px-4 py-3">
-											{user.firstName} {user.lastName}
+											{user.firstname} {user.lastname}
 										</td>
 										<td className="px-4 py-3">{user.email}</td>
 										<td className="px-4 py-3 capitalize">{user.role}</td>
