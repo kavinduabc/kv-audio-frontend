@@ -80,11 +80,11 @@ export default function BookingPage() {
 
     return (
         <div className="w-full h-full flex flex-col items-center gap-4">
-            <h1>Create Booking Page</h1>
+            <h1 className="text-2xl font-bold text-accent">Create Booking Page</h1>
 
-            {/* Date Inputs */}
-            <div className="flex flex-col gap-2">
-                <label>
+         
+            <div className=" flex flex-col gap-3">
+                <label className="flex items-center ">
                     Start Date:
                     <input
                         type="date"
@@ -93,7 +93,7 @@ export default function BookingPage() {
                         className="border px-2 py-1 ml-2"
                     />
                 </label>
-                <label>
+                <label className="flex items-center ">
                     End Date:
                     <input
                         type="date"
