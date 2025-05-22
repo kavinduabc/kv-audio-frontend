@@ -11,34 +11,17 @@ import { Link, Route,Routes} from 'react-router-dom'
 
 export default function HomeC(){
     return(
-        <div className="m-2 bg-primary ">
+        <div className=" bg-primary ">
 
-         <div className="w-[90%] h-[350px] mx-auto flex">
-
-         <div className="w-[20%] bg-white p-6 shadow-md flex flex-col justify-start gap-6 ">
-
-          <Link to="/uprofile">
-    <div className="flex items-center gap-3 text-gray-700 hover:text-accent cursor-pointer">
-      <FaRegUserCircle className="text-2xl" />
-      <h3 className="text-lg font-semibold">User Profile</h3>
-    </div>
-    </Link>
-
-    <div className="flex items-center gap-3 text-gray-700 hover:text-accent cursor-pointer">
-      <MdOutlinePreview className="text-2xl" />
-      <h3 className="text-lg font-semibold">View Reviews</h3>
-    </div>
-    <div className="flex items-center gap-3 text-gray-700 hover:text-accent cursor-pointer">
-      <MdOutlineRateReview className="text-2xl" />
-      <h3 className="text-lg font-semibold">Add Reviews</h3>
-    </div>
-  </div>
-
- 
-  <div className="flex items-center justify-center w-[70%] h-[350px] m-4  bg-cover bg-center">
-  <div className="flex flex-col items-center text-center px-4">
-    <h1 className="text-2xl font-bold text-black mb-2">Welcome To KV Audio</h1>
-    <p className="text-gray-500 max-w-xl mb-4">
+    <div
+  className="relative w-full h-[450px]  bg-cover bg-center  flex items-center justify-center"
+  style={{
+    backgroundImage: "url('homef.jpg')", 
+  }}
+>
+  <div className="flex flex-col items-center text-center px-4  bg-opacity-80 p-6 rounded-md">
+    <h1 className="text-2xl font-bold text-accent mb-2">Welcome To KV Audio</h1>
+    <p className="text-gray-600 max-w-xl mb-4">
       KV Audio provides professional audio equipment for events, rentals, and more. Explore our wide range of sound systems and services tailored for your needs.
     </p>
     <Link
@@ -50,8 +33,6 @@ export default function HomeC(){
   </div>
 </div>
 
-
-</div>
 
 
             <div>

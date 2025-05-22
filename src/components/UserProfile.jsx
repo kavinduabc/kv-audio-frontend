@@ -7,6 +7,8 @@ const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [order,setOrder] = useState(null);
+  const [loadingOrder,setLoadingOrder] = useState(true);
   useEffect(() => {
     const fetchUser = async () => {
       try {
