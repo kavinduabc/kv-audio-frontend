@@ -3,6 +3,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import mediaUpload from "../../Utils/MediaUpload";
+import { MdAddPhotoAlternate } from "react-icons/md";
 
 export default function AddProduct() {
   const [productKey, setProductKey] = useState("");
@@ -64,93 +65,114 @@ export default function AddProduct() {
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-semibold mb-6">Add Product</h1>
-
-      <div className="max-w-xl bg-white p-6 rounded-lg shadow-md flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="Product Key"
-          value={productKey}
-          onChange={(e) => setProductKey(e.target.value)}
-          className="border px-3 py-2 rounded"
-        />
-        <input
-          type="text"
-          placeholder="Product Name"
-          value={productName}
-          onChange={(e) => setProductName(e.target.value)}
-          className="border px-3 py-2 rounded"
-        />
-        <input
-          type="number"
-          placeholder="Product Price"
-          value={productPrice}
-          onChange={(e) => setProductPrice(e.target.value)}
-          className="border px-3 py-2 rounded"
-        />
-        <select
-          value={productCategory}
-          onChange={(e) => setProductCategory(e.target.value)}
-          className="border px-3 py-2 rounded"
-        >
-          <option value="audio">Audio</option>
-          <option value="light">Light</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Product Dimensions"
-          value={productDimension}
-          onChange={(e) => setProductDimension(e.target.value)}
-          className="border px-3 py-2 rounded"
-        />
-        <textarea
-          placeholder="Product Description"
-          value={productDescription}
-          onChange={(e) => setProductDescription(e.target.value)}
-          className="border px-3 py-2 rounded"
-        />
-
-        <div>
-          <label className="font-medium mb-1 block">Upload Images (max 5)</label>
-          <input
-            type="file"
-            multiple
-            onChange={(e) => setProductImages([...e.target.files])}
-            className="border px-3 py-2 rounded w-full"
-          />
+    <div className="p-10 bg-gray-100 min-h-screen">
+      <div className="max-w-3xl mx-auto bg-white p-8 rounded shadow-md">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-semibold">Add New Product</h1>
+          <button
+            onClick={() => navigate("/admin/items")}
+            className="text-sm text-blue-600 hover:underline"
+          >
+            Back to Item List
+          </button>
         </div>
 
-        <div className="flex items-center gap-2 mt-2">
+        <div className="space-y-4">
           <input
-            type="checkbox"
-            onChange={(e) => setFeatured(e.target.checked)}
-            checked={featured}
+            type="text"
+            placeholder="Product Key"
+            value={productKey}
+            onChange={(e) => setProductKey(e.target.value)}
+            className="w-full border px-4 py-2 rounded"
           />
-          <label>Mark as Featured</label>
-        </div>
-
-        <div className="flex items-center gap-2">
           <input
-            type="checkbox"
-            onChange={(e) => setHomeProducts(e.target.checked)}
-            checked={homeProducts}
+            type="text"
+            placeholder="Product Name"
+            value={productName}
+            onChange={(e) => setProductName(e.target.value)}
+            className="w-full border px-4 py-2 rounded"
           />
-          <label>Add to Home Page</label>
-        </div>
+          <input
+            type="number"
+            placeholder="Product Price"
+            value={productPrice}
+            onChange={(e) => setProductPrice(e.target.value)}
+            className="w-full border px-4 py-2 rounded"
+          />
+          <select
+            value={productCategory}
+            onChange={(e) => setProductCategory(e.target.value)}
+            className="w-full border px-4 py-2 rounded"
+          >
+            <option value="audio">Audio</option>
+            <option value="light">Light</option>
+          </select>
+          <input
+            type="text"
+            placeholder="Product Dimensions"
+            value={productDimension}
+            onChange={(e) => setProductDimension(e.target.value)}
+            className="w-full border px-4 py-2 rounded"
+          />
+          <textarea
+            placeholder="Product Description"
+            value={productDescription}
+            onChange={(e) => setProductDescription(e.target.value)}
+            className="w-full border px-4 py-2 rounded resize-none"
+            rows={4}
+          />
 
-        <button
-          onClick={handleAddItem}
-          className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-        >
-          Add Product
-        </button>
-        <button
-          onClick={() => navigate("/admin/items")}
-          className="bg-red-500 text-white py-2 rounded hover:bg-red-600"
-        >
-          Cancel
-        </button>
+          <div>
+            <label className="block font-medium mb-1">Upload Images (Max 5)</label>
+            <div className="flex items-center gap-3">
+              <label className="flex items-center gap-2 cursor-pointer text-blue-600 hover:text-blue-800">
+                <MdAddPhotoAlternate size={24} />
+                <span className="underline">Add Images</span>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={(e) => setProductImages([...e.target.files])}
+                  className="hidden"
+                />
+              </label>
+              <span className="text-sm text-gray-500">{productImages.length} selected</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={featured}
+              onChange={(e) => setFeatured(e.target.checked)}
+            />
+            <label>Mark as Featured</label>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={homeProducts}
+              onChange={(e) => setHomeProducts(e.target.checked)}
+            />
+            <label>Add to Home Page</label>
+          </div>
+
+          <div className="flex gap-4 mt-6">
+            <button
+              onClick={handleAddItem}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+            >
+              Add Product
+            </button>
+            <button
+              onClick={() => navigate("/admin/items")}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

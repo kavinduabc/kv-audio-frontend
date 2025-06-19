@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BsGraphDown, BsBookmarkDash } from 'react-icons/bs';
 import { FaRegUser } from 'react-icons/fa';
-import { MdOutlineSpeaker } from 'react-icons/md';
+import { MdAddPhotoAlternate, MdOutlineSpeaker } from 'react-icons/md';
 import { Link, Route, Routes } from 'react-router-dom';
 import AItems from './AdminItem';
 import AddProduct from './AddProduct';
@@ -9,6 +9,7 @@ import UpdateItems from './UpdateItemPage';
 import Logo from '../../components/Logo';
 import AdminUser from './AdminUser';
 import AdminOrdersPage from './AdminBooking';
+import AdminAddImage from './AdminAddImage'
 import axios from 'axios';
 
 const Admin = () => {
@@ -49,6 +50,7 @@ const Admin = () => {
           <AdminNavLink to="/admin/booking" icon={<BsBookmarkDash />} text="Booking" />
           <AdminNavLink to="/admin/items" icon={<MdOutlineSpeaker />} text="Items" />
           <AdminNavLink to="/admin/users" icon={<FaRegUser />} text="Users" />
+          <AdminNavLink to="/admin/addImage" icon={<MdAddPhotoAlternate/>} text="Add Galley"/>
         </nav>
       </aside>
 
@@ -61,6 +63,7 @@ const Admin = () => {
           <Route path="/items/add" element={<AddProduct />} />
           <Route path="/items/eddit" element={<UpdateItems />} />
           <Route path="/users" element={<AdminUser />} />
+          <Route path='/addImage' element={<AdminAddImage/>} />
         </Routes>
       </main>
     </div>
