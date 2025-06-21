@@ -1,22 +1,19 @@
 export default function ImageBox({ galery }) {
   return (
-    <div className="bg- rounded-xl overflow-hidden shadow-xl transition-transform hover:scale-105 duration-300">
+    <div className="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       <div className="relative">
-        <div className="m-4 rounded-xl overflow-hidden">
+        <div className="rounded-xl overflow-hidden">
           <img
             src={galery.image || "c:/Users/USER/Pictures/Screenshots/Screenshot 2025-06-21 083235.png"}
             alt={galery.functionName}
-            className="w-full h-60 object-cover brightness-90 border-4 border-gray-500 rounded-lg"
+            className="w-full h-56 object-cover"
           />
         </div>
-        {/* Gradient overlay with a single gray color */}
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-800/70 to-transparent pointer-events-none" />
-      </div>
-      <div className="px-6 pb-4 text-gray-400 flex justify-between">
-        <h4 className="text-lg font-semibold text-[16px]">{galery.functionName}</h4>
-        <p className="text-sm text-gray-400 text-[13px]">
-          {galery.date ? new Date(galery.date).toLocaleDateString() : ""}
-        </p>
+        {/* Overlay for text at the bottom */}
+        <div className="absolute bottom-0 w-full  px-4 py-2 flex justify-between items-center text-gray-200">
+          <span className="text-sm font-medium truncate">{galery.functionName || "Event Name"}</span>
+          <span className="text-sm text-[13px]">{galery.date ? new Date(galery.date).toLocaleDateString() : "No Date"}</span>
+        </div>
       </div>
     </div>
   );
