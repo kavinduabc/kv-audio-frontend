@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { MdAddPhotoAlternate } from "react-icons/md";
 import axios from "axios";
 import toast from "react-hot-toast";
+import mediaUpload from "../../Utils/MediaUpload";
+
 
 export default function AddImage() {
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFile, setImageFile] = useState(null); // Change to null
   const [functionName, setFunctionName] = useState("");
   const [description, setDescription] = useState("");
-
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
@@ -17,40 +18,39 @@ export default function AddImage() {
       return;
     }
 
+    const token = localStorage.getItem("token");
+    const backendurl = import.meta.env.VITE_BACKEND_URL;
+
+    if (!token) {
+      toast.error("You are not authorized to perform this task");
+      return;
+    }
+
     try {
       
-      const imageUrl = await uploadImage(imageFile);
-
-   
-      const backendurl = import.meta.env.VITE_BACKEND_URL;
-      const token = localStorage.getItem("token");
+      const imageUrl = await mediaUpload(imageFile);
 
       await axios.post(
         `${backendurl}/api/addImage`,
         {
           image: imageUrl,
-          functionName,
-          discription: description
+          functionName: functionName,
+          discription: description,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
 
       toast.success("Image added successfully!");
       navigate("/api/addImage");
     } catch (err) {
+      console.error(err);
       toast.error(err.response?.data?.error || "Error adding image");
     }
-  };
-
-  // Dummy uploader (replace with your mediaUpload logic)
-  const uploadImage = async (file) => {
-    // return a fake URL or use your own image uploader
-    return "https://example.com/uploaded-image.jpg";
   };
 
   return (
