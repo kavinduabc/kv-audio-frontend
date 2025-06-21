@@ -29,7 +29,7 @@ export default function Gallery() {
   }, []);
 
   return (
-    <div className="background  min-h-screen  px-6 py-8">
+    <div className=" min-h-screen  px-6 py-8">
       <h3 className="text-3xl font-bold text-center mb-6 text-gray-800">Gallery</h3>
 
       {state === "Loading" && (
