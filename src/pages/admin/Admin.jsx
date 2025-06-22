@@ -11,6 +11,7 @@ import AdminUser from './AdminUser';
 import AdminOrdersPage from './AdminBooking';
 import AdminAddImage from './AdminAddImage'
 import axios from 'axios';
+import AdminDashboard from './AdminDashboad';
 
 const Admin = () => {
   const [userValidated, setUserValidated] = useState(false);
@@ -57,7 +58,7 @@ const Admin = () => {
       {/* Main Content */}
       <main className="flex-grow p-6 bg-white rounded-tl-3xl shadow-inner">
         <Routes>
-          <Route path="/dashboard" element={<h1 className="text-2xl font-bold">Dashboard</h1>} />
+          <Route path="/dashboard" element={<AdminDashboard/>} />
           <Route path="/booking" element={<AdminOrdersPage />} />
           <Route path="/items" element={<AItems />} />
           <Route path="/items/add" element={<AddProduct />} />
