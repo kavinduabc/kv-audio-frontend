@@ -30,74 +30,86 @@ ChartJS.register(
 export default function AdminDashboard() {
   const [customerCount, setCustomerCount] = useState(0);
   const [orderCount, setOrderCount] = useState(0);
-  const [monthlyOrders,setMonthlyOrders]=useState({labels:[],datasets:[]});
+  const [monthlyOrders, setMonthlyOrders] = useState({ labels: [], datasets: [] });
   const [productCount, setProductCount] = useState(0);
   const [state, setState] = useState("Loading");
 
-  useEffect(()=>{
-   if(state == "Loading"){
-    const token = localStorage.getItem("token");
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/customerCount`,{
-        headers:{
-            Authorization :`Bearer ${token}`,
-        }
-    }).then((res)=>{
-        setCustomerCount(res.data.customerCount);
-        setState("success");
-        console.log(res.data);
-    }).catch((err)=>{
-        toast.error(err?.response?.data?.error || "Error fetching Users");
-        setState("error");
-    })
-   }
-  },[])
-
-  useEffect(()=>{
-    const token = localStorage.getItem("token");
-
-     axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/orderCount`,{
-            headers:{
-                Authorization:`Bearer ${token}`,
-            },
-        }).then((res)=>{
-            setOrderCount(res.data.totalOrders);
-            setState("Success");
-            console.log("order count:", res.data.totalOrders);
-        }).catch((err)=>{
-            toast.error(err?.response?.data?.error || "Error fetch order count");
-            setState(err);
+  useEffect(() => {
+    if (state === "Loading") {
+      const token = localStorage.getItem("token");
+      axios
+        .get(`${import.meta.env.VITE_BACKEND_URL}/api/users/customerCount`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
+        .then((res) => {
+          setCustomerCount(res.data.customerCount);
+          setState("success");
+          console.log("Customer Count:", res.data.customerCount);
+        })
+        .catch((err) => {
+          toast.error(err?.response?.data?.error || "Error fetching Users");
+          setState("error");
+        });
+    }
+  }, []);
 
-  },[])
-
-   useEffect(()=>{
+  useEffect(() => {
     const token = localStorage.getItem("token");
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/product/productCount`,{
-        headers:{
-            Authorization:`Bearer ${token}`
+
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/orders/orderCount`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-    }).then((res)=>{
-        setProductCount(res.data.totalProducts);
-        console.log("Product count:",res.data.totalProducts)
+      })
+      .then((res) => {
+        const orders = res.data.monthlyOrders || [];
+
+        setMonthlyOrders({
+         labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+
+          datasets: [
+            {
+              label: "Monthly Orders",
+              data: orders,
+              borderColor: "blue",
+              backgroundColor: "rgba(0,0,255,0.1)",
+              tension: 0.3,
+              fill: true,
+            }
+          ]
+        });
+
+        setOrderCount(res.data.totalOrders);
+        console.log("Order count:", res.data.totalOrders);
+        console.log("Monthly Orders:",res.data.monthlyOrders);
         setState("success");
-    }).catch((err)=>{
-        toast.error(err?.response?.data?.error || "Error fetchin the total product ");
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.error || "Error fetching order count");
+      });
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/product/productCount`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setProductCount(res.data.totalProducts);
+        console.log("Product count:", res.data.totalProducts);
+        setState("success");
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.error || "Error fetching product count");
         setState(err);
-    })
-
-  },[])
-
-  const dataLine = {
-    labels: ["Jan", "Feb", "Mar"],
-    datasets: [
-      {
-        label: "Sales",
-        data: [30, 40, 50],
-        borderColor: "blue",
-        tension: 0.3,
-      },
-    ],
-  };
+      });
+  }, []);
 
   const dataBar = {
     labels: ["Product A", "Product B", "Product C"],
@@ -121,8 +133,8 @@ export default function AdminDashboard() {
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="bg-white p-4 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Oders Dependencies</h3>
-          <Line data={dataLine} />
+          <h3 className="text-lg font-semibold mb-4">Orders by Month</h3>
+          <Line data={monthlyOrders} />
         </div>
         <div className="bg-white p-4 rounded-lg shadow-md">
           <h3 className="text-lg font-semibold mb-4">Products Data</h3>
