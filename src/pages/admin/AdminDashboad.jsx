@@ -1,6 +1,7 @@
 import { FaBox, FaCog, FaShoppingCart, FaUser } from "react-icons/fa";
 import ADashCard from "../../components/ADashCard";
 import {Line,Bar} from "react-chartjs-2";
+import axios from "axios";
 import {
   Chart as ChartJS,
   LineElement,
@@ -12,6 +13,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 ChartJS.register(
   LineElement,
@@ -26,7 +29,27 @@ ChartJS.register(
 
 
 export default function AdminDashboard(){
-  
+  //database connection and fecting data 
+  const [users,setUsers] = useState();
+  const [state,setState] = useState("Loading");
+
+  useEffect(()=>{
+   if(state == "Loading"){
+    const token = localStorage.getItem("token");
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/cuctomerCount`,{
+        headers:{
+            Authorization :`Bearer ${token}`,
+        }
+    }).then((res)=>{
+        setUsers(res.data);
+        setState("success");
+        console.log(res.data);
+    }).catch((err)=>{
+        toast.error(err?.response?.data?.error || "Error fetching Users");
+        setState("error");
+    })
+   }
+  },[])
 
    //duny data ...
     const dataLine = {
