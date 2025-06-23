@@ -1,6 +1,7 @@
 import { FaShoppingCart, FaFacebookF, FaTwitter, FaInstagram, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Logo from '../components/Logo'
+import { BiMessageAdd } from "react-icons/bi";
 
 export default function Header() {
   return (
@@ -32,6 +33,10 @@ export default function Header() {
         <Link to="/login" className="hover:text-[#aaa]">
           <FaUser/>
         </Link>
+         <Link to="/inquery" className="hover:text-[#aaa]">
+          <BiMessageAdd/>
+        </Link>
+        
         </div>
       </div>
     </header>
