@@ -12,6 +12,8 @@ import AdminOrdersPage from './AdminBooking';
 import AdminAddImage from './AdminAddImage'
 import axios from 'axios';
 import AdminDashboard from './AdminDashboad';
+import AdminInquiries from './AdminInquiries';
+import { BiMessageDetail } from 'react-icons/bi';
 
 const Admin = () => {
   const [userValidated, setUserValidated] = useState(false);
@@ -52,6 +54,8 @@ const Admin = () => {
           <AdminNavLink to="/admin/items" icon={<MdOutlineSpeaker />} text="Items" />
           <AdminNavLink to="/admin/users" icon={<FaRegUser />} text="Users" />
           <AdminNavLink to="/admin/addImage" icon={<MdAddPhotoAlternate/>} text="Add Galley"/>
+          <AdminNavLink to="/admin/inquiry" icon={<BiMessageDetail/>} text="Inquiries"/>
+
         </nav>
       </aside>
 
@@ -65,6 +69,7 @@ const Admin = () => {
           <Route path="/items/eddit" element={<UpdateItems />} />
           <Route path="/users" element={<AdminUser />} />
           <Route path='/addImage' element={<AdminAddImage/>} />
+          <Route path='/inquiry' element={<AdminInquiries/>} />
         </Routes>
       </main>
     </div>

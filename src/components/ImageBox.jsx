@@ -1,10 +1,10 @@
 export default function ImageBox({ galery }) {
   return (
-    <div className="bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+    <div className="bg-gray-800 rounded-xl overflow-hidden  shadow-md hover:shadow-lg transition-shadow duration-300">
       <div className="relative">
         <div className="rounded-xl overflow-hidden">
           <img
-            src={galery.image || "c:/Users/USER/Pictures/Screenshots/Screenshot 2025-06-21 083235.png"}
+            src={galery.image }
             alt={galery.functionName}
             className="w-full h-56 object-cover"
           />
