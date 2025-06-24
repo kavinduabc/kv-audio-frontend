@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { FiTrash2 } from "react-icons/fi";
 
 export default function AdminInquiries() {
   const [inquiries, setInquiries] = useState([]);
@@ -24,9 +25,26 @@ export default function AdminInquiries() {
       });
   }, []);
 
-  function  handleDeleteInquiry(id){
+  const handleDeleteInquiry = (id) => {
+    if (window.confirm("Are you sure you want to delete this inquiry?")) {
+      const token = localStorage.getItem("token");
 
-  }
+      axios
+        .delete(`${import.meta.env.VITE_BACKEND_URL}/api/inquiry/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          setInquiries(inquiries.filter((inq) => inq.id !== id));
+          toast.success("Inquiry deleted successfully");
+        })
+        .catch((err) => {
+          toast.error("Failed to delete inquiry");
+          console.error(err);
+        });
+    }
+  };
 
   return (
     <div className="w-full p-6">
@@ -58,11 +76,20 @@ export default function AdminInquiries() {
                     <td className="px-4 py-2">{item.email}</td>
                     <td className="px-4 py-2">{item.phone}</td>
                     <td className="px-4 py-2">{item.message}</td>
+                    <td className="px-4 py-2">
+                      <button
+                        onClick={() => handleDeleteInquiry(item.id)}
+                        className="text-red-600 hover:text-red-800"
+                      > 
+                     <FiTrash2 size={18} />
+
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className="text-center py-6 text-gray-500">
+                  <td colSpan="5" className="text-center py-6 text-gray-500">
                     No inquiries found.
                   </td>
                 </tr>
