@@ -42,7 +42,11 @@ export default function HomeC(){
             </div>
             </div>
             <Batches/>
+
+            <div className="p-5 bg-gray-100">
             <HomePageItems/>
+            </div>
+
             </div>
 
             <div>

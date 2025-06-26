@@ -24,18 +24,24 @@ const HomePageItems = () => {
   }, [state]);
 
   return (
-    <div className="pt-[50px] bg-gray-100">
-      <h3 className="m-3 text-2xl text-[#333] font-medium">NEW  PRODUCTS.</h3>
+    <div className="pt-[5px] bg-gray-100">
+      <h3 className="m-2 text-2xl text-[#333] font-medium px-9">NEW  PRODUCTS.</h3>
+      
       {state === "loading" ? (
         <div className="w-full h-full flex justify-center items-center">
           <div className="w-[50px] h-[50px] border-4 rounded-full border-t-green-500 animate-spin"></div>
         </div>
       ) : (
-        <div className="bg-gray-100 w-full h-[400px] flex items-center gap-4 overflow-x-auto px-4">
+        <div className="bg-gray-100  px-10">
+        <div className="bg-white w-full h-[400px] flex items-center gap-4 overflow-x-auto px-6 ">
+          
           {items.map((item) => (
             <PCard key={item._id || item.id} item={item} />
+            
           ))}
+          </div>
         </div>
+        
       )}
     </div>
   );
