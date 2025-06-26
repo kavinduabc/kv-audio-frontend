@@ -3,6 +3,7 @@ import { formatDate, loadCart } from "../../Utils/Cart"
 import BookingItems from "../../components/BookingItem";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Footer from "../../components/Footer"
 
 export default function BookingPage() {
     const [cart, setCart] = useState(loadCart());
@@ -79,7 +80,9 @@ export default function BookingPage() {
 
 
     return (
-        <div className="w-full h-full flex flex-col items-center gap-4">
+        <div className="bg-gray-100 ">
+        <div className="bg-gray-100 w-full min-h-screen flex justify-center items-start py-10">
+        <div className="bg-white w-full max-w-5xl flex flex-col items-center gap-4 p-6 rounded-md ">
             <h1 className="text-2xl font-bold text-accent">Create Booking Page</h1>
 
          
@@ -128,6 +131,9 @@ export default function BookingPage() {
                 onClick={handleBookingCreation}
                >Create Booking</button>
             </div>
+        </div>
+        </div>
+        <Footer/>
         </div>
     );
 }

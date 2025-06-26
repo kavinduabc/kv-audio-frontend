@@ -14,7 +14,7 @@ export default function HomeC(){
         <div className=" bg-primary ">
 
     <div
-  className="relative w-full h-[450px]  bg-cover bg-center  flex items-center justify-center"
+  className="relative w-full h-[490px]  bg-cover bg-center  flex items-center justify-center"
   style={{
     backgroundImage: "url('homef.jpg')", 
   }}
