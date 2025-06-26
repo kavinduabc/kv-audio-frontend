@@ -36,7 +36,11 @@ export default function HomeC(){
 
 
             <div>
+              <div className="p-5">
+                <div className="p-5">
             <Slider/>
+            </div>
+            </div>
             <Batches/>
             <HomePageItems/>
             </div>

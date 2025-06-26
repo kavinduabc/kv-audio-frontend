@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function PCard({ item }) {
   return (
+    // <div className='p-5 mx-auto '>
     <div className="w-64 bg-white rounded-xl shadow-md hover:shadow-lg transition-transform hover:scale-105">
       
       {/* Image */}
@@ -49,5 +50,6 @@ export default function PCard({ item }) {
         </div>
       </div>
     </div>
+    // </div>
   );
 }
