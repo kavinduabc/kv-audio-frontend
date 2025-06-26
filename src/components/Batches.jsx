@@ -27,7 +27,7 @@ const Batches = () => {
       {features.map((feature, index) => (
         <div
           key={index}
-          className="flex items-start gap-4  p-4 rounded-lg hover:shadow-md transition"
+          className="flex items-start gap-4  p-4 rounded-lg "
         >
           {feature.icon}
           <div>
