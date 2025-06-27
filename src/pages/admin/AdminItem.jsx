@@ -40,7 +40,7 @@ export default function AItems() {
     };
 
     return (
-        <div className="w-full p-6">
+        <div className="w-full p-6 bg-gray-100">
             <div className="mb-6 flex justify-between items-center">
                 <h2 className="text-2xl font-semibold text-gray-800">Manage Products</h2>
                 <Link to="/admin/items/add" className="bg-[#C6C20E] hover:bg-yellow-400 text-black font-semibold py-2 px-4 rounded-lg flex items-center gap-2 shadow-md transition">
@@ -54,7 +54,7 @@ export default function AItems() {
                     <div className="border-4 border-b-blue-500 rounded-full animate-spin w-16 h-16"></div>
                 </div>
             ) : (
-                <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+                <div className="overflow-x-auto p-6 bg-white shadow-lg rounded-lg">
                     <table className="w-full table-auto text-sm text-left">
                         <thead className="bg-gray-100 text-gray-700 uppercase">
                             <tr>

@@ -33,7 +33,7 @@ export default function AdminUsersPage() {
 	};
 
 	return (
-		<div className="w-full p-6">
+		<div className="w-full h-full bg-gray-100 p-6">
 			<div className="mb-6 flex justify-between items-center">
 				<h2 className="text-2xl font-semibold text-gray-800">Manage Users</h2>
 			</div>
@@ -43,7 +43,7 @@ export default function AdminUsersPage() {
 					<div className="border-4 border-b-blue-500 rounded-full animate-spin w-16 h-16"></div>
 				</div>
 			) : (
-				<div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+				<div className="overflow-x-auto bg-white p-5 shadow-lg rounded-lg">
 					<table className="w-full table-auto text-sm text-left">
 						<thead className="bg-gray-100 text-gray-700 uppercase">
 							<tr>
