@@ -16,62 +16,66 @@ export default function Login() {
         email,
         password,
       });
-      toast.success("Login success");
+      toast.success("Login successful!");
       localStorage.setItem("token", res.data.token);
       const user = res.data.user;
       navigate(user.role === "admin" ? "/admin/" : "/");
     } catch (err) {
-      toast.error(err.response?.data?.error || "Login failed");
+      toast.error(err.response?.data?.error || "Login failed. Try again.");
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#f4f4f4]">
+    <div
+      className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
+      style={{ backgroundImage: "url('lsBackground.jpg')" }}
+    >
       <Toaster />
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg overflow-hidden grid grid-cols-1 md:grid-cols-2">
-       
-        <div className="bg-[#2E2E2E] text-white flex flex-col items-center justify-center p-10 hidden md:flex">
-          <h2 className="text-3xl font-bold mb-4">Welcome Back!</h2>
-          <p className="text-sm mb-6 text-center">
-            Sign in to access your dashboard and continue exploring KV Audio.
-          </p>
-          <Link to="/signup">
-            <button className="bg-white text-[#2E2E2E] px-6 py-2 rounded font-semibold hover:bg-accent hover:text-white transition">
-              SIGN UP
-            </button>
-          </Link>
-        </div>
+      <div className="flex flex-col justify-center items-center p-10 bg-[#00000099] rounded-2xl shadow-2xl backdrop-blur-md w-full max-w-md text-white">
+  <h2 className="text-3xl md:text-4xl font-bold mb-6">Sign In</h2>
 
-       
-        <div className="flex flex-col justify-center items-center p-10">
-          <h2 className="text-3xl font-bold text-[#2E2E2E] mb-6">Sign In</h2>
+  <form onSubmit={login} className="w-full space-y-5">
+    <input
+      type="email"
+      placeholder="Email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      className="w-full px-4 py-3 rounded-lg bg-white/10 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400 placeholder-gray-300"
+      required
+    />
+    <input
+      type="password"
+      placeholder="Password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      className="w-full px-4 py-3 rounded-lg bg-white/10 text-white border border-white/30 focus:outline-none focus:ring-2 focus:ring-yellow-400 placeholder-gray-300"
+      required
+    />
 
-          <form onSubmit={login} className="w-full max-w-xs space-y-4">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none bg-gray-100"
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none bg-gray-100"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full py-2 bg-accent text-white font-semibold rounded hover:opacity-90 transition"
-            >
-              SIGN IN
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+    <button
+      type="submit"
+      className="w-full py-3 border border-white text-white font-semibold rounded-lg hover:bg-white hover:text-black transition duration-300"
+    >
+      LOGIN
+    </button>
+
+    <button
+      type="button"
+      className="w-full flex items-center justify-center gap-2 border border-white text-white py-2 rounded-lg hover:bg-white hover:text-black transition duration-300"
+    >
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png" alt="Google" className="w-5 h-5" />
+      Login with Google
+    </button>
+
+    <p className="text-sm text-center mt-4">
+      Are you new to KV Audio?{" "}
+      <Link to="/signup" className="text-yellow-400 font-semibold hover:underline">
+        Register here
+      </Link>
+    </p>
+  </form>
+</div>
+
+</div>
   );
 }
