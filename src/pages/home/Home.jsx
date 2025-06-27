@@ -12,6 +12,7 @@ import Login from '../login/Login'
 import SignUp from '../Signup/Signup'
 import UserProfile from "../../components/UserProfile";
 import Inquery from "../../components/Inquery";
+import ListInquery from "../../components/ListInquery";
 
 
 
@@ -30,7 +31,7 @@ export default function Home(){
                <Route  path="/items" element={<Items/>}/> 
                <Route path='/login' element={<Login/>} />
                <Route path='/signup' element={<SignUp/>} />
-               <Route path='/inquery' element={<Inquery/>} />
+               <Route path='/inquery' element={<ListInquery/>} />
                <Route path="/product/:key" element={<ProductOverView/>} />
                <Route path="/*" element={<Error/>}/>
                </Routes> 

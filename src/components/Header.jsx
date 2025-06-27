@@ -74,7 +74,7 @@ export default function Header() {
      <Link to="/inquery" className="hover:text-[#aaa]">
     <div className="flex items-center gap-1">
       <BiMessageAdd />
-      <h5 className="text-sm">Message</h5>
+      <h5 className="text-sm">Comments</h5>
     </div>
     </Link>
   </div>

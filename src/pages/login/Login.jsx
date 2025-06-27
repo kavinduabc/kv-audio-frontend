@@ -27,8 +27,8 @@ export default function Login() {
 
   return (
     <div
-      className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
-      style={{ backgroundImage: "url('lsBackground.jpg')" }}
+      className="min-h-screen bg-gray-100 bg-cover bg-center flex items-center justify-center px-4"
+      style={{ backgroundImage: "url('LoginSignUp.jpg')" }}
     >
       <Toaster />
       <div className="flex flex-col justify-center items-center p-10 bg-[#00000099] rounded-2xl shadow-2xl backdrop-blur-md w-full max-w-md text-white">

@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import PCard from "../../components/ProductCard"
+import Footer from "../../components/Footer"
 
   export default function Items(){
     
@@ -25,7 +26,8 @@ import PCard from "../../components/ProductCard"
     },[])
 
     return(
-        <div className="w-full h-full flex flex-wrap justify-center pt-[50px] gap-4">
+      <>
+        <div className="w-full n flex flex-wrap  justify-center pt-[50px] gap-4">
            
            {
             //** start codding in rendaring method  */
@@ -44,5 +46,7 @@ import PCard from "../../components/ProductCard"
             })
            }
         </div>
+        <Footer/>
+        </>
     )
   }

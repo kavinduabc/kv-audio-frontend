@@ -46,7 +46,7 @@ export default function SignUp() {
   return (
     <div
   className="min-h-screen bg-cover bg-center flex items-center justify-center px-4"
-  style={{ backgroundImage: "url('lsBackground.jpg')" }} // Replace with your image path
+  style={{ backgroundImage: "url('LoginSignUp.jpg')" }}
 >
   <div className="w-full max-w-lg bg-[#00000099] backdrop-blur-md text-white rounded-2xl shadow-2xl p-8">
     <h2 className="text-3xl font-bold text-center mb-6">Create Account</h2>

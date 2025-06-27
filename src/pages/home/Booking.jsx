@@ -82,12 +82,13 @@ export default function BookingPage() {
     return (
         <div className="bg-gray-100 ">
         <div className="bg-gray-100 w-full min-h-screen flex justify-center items-start py-10">
-        <div className="bg-white w-full max-w-5xl flex flex-col items-center gap-4 p-6 rounded-md ">
+        <div className="border border-gray-300 shadow-sm w-full max-w-5xl flex flex-col items-center gap-4 p-6 rounded-md ">
             <h1 className="text-2xl font-bold text-accent">Create Booking Page</h1>
 
          
             <div className=" flex flex-col gap-3">
-                <label className="flex items-center ">
+                <div className="flex gap-4">
+                <label className="flex items-center p-2 border border-white ">
                     Start Date:
                     <input
                         type="date"
@@ -96,7 +97,7 @@ export default function BookingPage() {
                         className="border px-2 py-1 ml-2"
                     />
                 </label>
-                <label className="flex items-center ">
+                <label className="flex items-center p-2 border border-white">
                     End Date:
                     <input
                         type="date"
@@ -105,6 +106,7 @@ export default function BookingPage() {
                         className="border px-2 py-1 ml-2"
                     />
                 </label>
+                </div>
                 <p className="text-sm text-gray-600">
                     Duration: {getDayCount(startDate, endDate)} day(s)
                 </p>

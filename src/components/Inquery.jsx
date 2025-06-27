@@ -7,12 +7,11 @@ export default function Inquery() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
-
   const navigate = useNavigate();
 
   function handleInquery(e) {
     e.preventDefault();
-    
+
     const token = localStorage.getItem("token");
     const data = {
       email,
@@ -21,57 +20,56 @@ export default function Inquery() {
     };
 
     axios
-      .post(`${import.meta.env.VITE_BACKEND_URL}/api/inquiry`, data,{
-        headers:{
-          Authorization:`Bearer ${token}`,
-        }
+      .post(`${import.meta.env.VITE_BACKEND_URL}/api/inquiry`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then((res) => {
-        console.log(res);
         toast.success("Inquiry submitted successfully");
-        navigate("/");
+        setEmail("");
+        setPhone("");
+        setMessage("");
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err?.response?.data?.error || "Something went wrong");
       });
   }
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">Inquiry Form</h2>
-      <form onSubmit={handleInquery} className="space-y-4">
+    <form onSubmit={handleInquery} className="space-y-4">
+      <div className="flex flex-col md:flex-row md:space-x-4">
         <input
           type="email"
-          placeholder="Your Email"
+          placeholder="Name or Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full border p-3 rounded-md"
+          className="flex-1 border p-2 rounded mb-2 md:mb-0"
           required
         />
         <input
           type="text"
-          placeholder="Phone Number"
+          placeholder="Phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="w-full border p-3 rounded-md"
+          className="flex-1 border p-2 rounded"
           required
         />
-        <textarea
-          placeholder="Your Message"
-          rows="4"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          className="w-full border p-3 rounded-md"
-          required
-        ></textarea>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
+      </div>
+      <textarea
+        placeholder="Comment"
+        rows="3"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        className="w-full border p-2 rounded"
+        required
+      ></textarea>
+      <button
+        type="submit"
+        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+      >
+        Post Comment
+      </button>
+    </form>
   );
 }
