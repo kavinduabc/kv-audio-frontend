@@ -65,10 +65,12 @@ export default function Header() {
   
   <div className="flex gap-6 items-center">
 
+    <Link to="/userprofile" className="hover:text-[#aaa]">
     <div className="flex items-center gap-1">
       <FaUser className="text-[19px]"/>
       <h5 className="text-sm">User Profile</h5>
     </div>
+    </Link>
      <h4>|</h4>
 
      <Link to="/inquery" className="hover:text-[#aaa]">

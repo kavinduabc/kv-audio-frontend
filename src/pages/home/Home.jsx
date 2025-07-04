@@ -10,7 +10,7 @@ import BookingPage from "./Booking";
 import Footer from "../../components/Footer"
 import Login from '../login/Login'
 import SignUp from '../Signup/Signup'
-import UserProfile from "../../components/UserProfile";
+import  UserProfile  from '../../components/UserProfile';
 import Inquery from "../../components/Inquery";
 import ListInquery from "../../components/ListInquery";
 
@@ -25,7 +25,7 @@ export default function Home(){
             <div className="h-[calc(100vh-100px)] w-full bg-primary">
                <Routes path="/*">
                <Route  path="/" element={<HomeC/>}/> 
-               <Route path="/uprofile" element={<UserProfile/>}/>
+               <Route path="/userprofile" element={<UserProfile />} />
                <Route  path="/gallery" element={<Gallery/>}/> 
                <Route path='/booking' element={<BookingPage/>}/>
                <Route  path="/items" element={<Items/>}/> 

@@ -26,13 +26,13 @@ export default function ListInquery() {
       });
   }, []);
 
-  // ...existing code...
+ 
 return (
   <div className="min-h-screen bg-gray-100 flex flex-col items-center py-6">
     <div className="flex flex-col items-center justify-center w-full">
       <div className="bg-white w-full max-w-2xl shadow-lg rounded-xl">
         <div className="bg-gray-100 border-white p-6 mb-8 rounded-t-xl">
-          <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">Inquiry Form</h2>
+          <h2 className="text-2xl font-bold mb-4 text-center text-gray-700">Add Comment</h2>
           <Inquery />
         </div>
         <div className="bg-white rounded-b-xl shadow-lg p-6">
@@ -68,7 +68,7 @@ return (
               ))
             )}
           </div>
-          {/* Pagination placeholder */}
+          
           <div className="flex justify-center mt-6">
             <div className="space-x-2">
               <button className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">1</button>
