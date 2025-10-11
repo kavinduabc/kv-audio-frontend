@@ -29,6 +29,7 @@ export default function Header() {
         <FaInstagram className="hover:text-[#aaa] cursor-pointer" /> */}
 
         <div className="m-2.5 flex gap-1.5">
+          
         <Link to="/booking" className="hover:text-[#aaa]">
         <div className="flex gap-1.5 items-center border text-[18px] p-2 rounded-md">
           <FaShoppingCart />
