@@ -46,7 +46,7 @@ export default function BookingItems({ productKey, quantity, refresh }) {
         <p className="text-sm text-gray-500">{item.category}</p>
         <p className="text-sm">{item.description}</p>
         <p className="mt-1 font-medium">Dimensions: {item.dimensions}</p>
-        <p className="mt-1 font-bold text-lg">₹ {item.price}</p>
+        <p className="mt-1 font-bold text-lg">LKR {item.price}</p>
       </div>
       <div className="flex flex-col items-end gap-2">
 

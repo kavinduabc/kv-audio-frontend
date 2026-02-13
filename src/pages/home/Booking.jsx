@@ -24,8 +24,8 @@ export default function BookingPage() {
     function calculateTotal(){
         const cartInfo = loadCart();
         const dayCount = getDayCount(startDate, endDate);
-        cartInfo.startDate = startDate;
-        cartInfo.endDate = endDate;
+        cartInfo.startingDate = startDate;
+        cartInfo.endingDate = endDate;
         cartInfo.days = dayCount;
     
         axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders/quotetion`, cartInfo)
@@ -46,27 +46,32 @@ export default function BookingPage() {
     function handleBookingCreation(){
 
         const cart = loadCart();
-        
-        cart.startDate= startDate;
-        cart.endDate = endDate;
+
+        cart.startingDate = startDate;
+        cart.endingDate = endDate;
         const dayCount = getDayCount(startDate, endDate);
         cart.days = dayCount;
 
         const token = localStorage.getItem("token");
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders`,cart,{
-            headers:{
-                Authorization : `Bearer ${token}`,
-               
+        if (!token) {
+            toast.error("You must be logged in to create a booking");
+            return;
+        }
+
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/orders`, cart, {
+            headers: {
+                Authorization: `Bearer ${token}`,
             }
-        }).then((res)=>{
+        }).then((res) => {
             console.log("Cart being sent:", cart);
-            console.log(res.date);
+            console.log(res.data);
             localStorage.removeItem("cart");
             toast.success("Booking Created");
             setCart(loadCart());
-        }).catch((err)=>{
-            console.error(err);
-            toast.error("Faild to create booking");
+        }).catch((err) => {
+            console.error("Create booking error:", err.response || err.message || err);
+            const message = err.response?.data?.message || err.response?.data?.error || err.message || "Failed to create booking";
+            toast.error(message);
         })
     }
 

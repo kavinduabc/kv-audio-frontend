@@ -1,37 +1,67 @@
 import { createClient } from "@supabase/supabase-js"
 
-const anone_key ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJxbm91Z2Znc2ZsYWplcGloenpnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU4MzM0NDUsImV4cCI6MjA2MTQwOTQ0NX0.HFikQ2QACpaqv9p6pUg5JfnIOwU3VvZK7whgxx3k5rI"
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+if (!supabaseUrl || !supabaseKey) {
+  console.warn("Supabase URL or anon key missing. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env");
+}
 
-//const supabase_url ="https://bxjnetctpsedeqlbcjgj.supabase.co"
+let supabase = null;
+try {
+  if (supabaseUrl && supabaseKey) {
+    supabase = createClient(supabaseUrl, supabaseKey);
+  }
+} catch (e) {
+  console.warn("Failed to initialize Supabase client:", e.message || e);
+}
 
-const supabase_url ="https://bqnougfgsflajepihzzg.supabase.co"
+export default async function mediaUpload(file){
+    if(!file) throw new Error("No file selected");
 
-
-const supabase = createClient(supabase_url,anone_key)
-
-export default function mediaUpload(file){
-
-    return new Promise((resolve,reject)=>{
-
-        if(file == null){
-            reject("No file selected")
-        }
-        
+    // If supabase is configured, try uploading there first
+    if (supabase) {
         const timestamp = new Date().getTime();
-        const fileName = timestamp+file.name
-    
-        supabase.storage.from("images").upload(fileName,file,{
-            cacheControl : '3600',
-            upsert : false,
-        }).then(()=>{
-    
-            const publicUrl = supabase.storage.from("images").getPublicUrl(fileName).data.publicUrl;
-            resolve(publicUrl)
-        }).catch(()=>{
-            reject("Error uploading file ")
-        })
-    });
-    
-   
+        const fileName = `${timestamp}-${file.name}`;
+        try {
+            const { error: uploadError } = await supabase.storage.from("images").upload(fileName, file, {
+                cacheControl: '3600',
+                upsert: false,
+            });
+
+            if (uploadError) throw uploadError;
+
+            const { data: publicData, error: urlError } = await supabase.storage.from("images").getPublicUrl(fileName);
+            if (urlError) throw urlError;
+            return publicData.publicUrl;
+        } catch (e) {
+            console.error("Supabase upload failed:", e.message || e);
+            // fallthrough to backend upload
+        }
+    }
+
+    // Fallback: upload to backend public upload endpoint
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+    if (!backendUrl) throw new Error("Backend URL not configured for fallback upload");
+
+    const formData = new FormData();
+    formData.append('imageFile', file);
+
+    try {
+        const res = await fetch(`${backendUrl}/api/addImage/upload-public`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(`Backend upload failed: ${res.status} ${errText}`);
+        }
+
+        const data = await res.json();
+        return data.url; // { url: 'http://host/uploads/filename' }
+    } catch (e) {
+        console.error("Backend upload failed:", e.message || e);
+        throw new Error("Error uploading file: " + (e.message || e));
+    }
 }
